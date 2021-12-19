@@ -10,7 +10,7 @@ exports.up = async (knex) => {
       .createTable("pins", (pins) => {
         pins.increments("pin_id");
         pins.string("maker", 200).notNullable();
-        pins.string("imgURL", 200).notNullable();
+        pins.string("imgurl", 200).notNullable();
       })
       .createTable("pins_have", (pins) => {
         pins.increments("have_id");
