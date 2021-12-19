@@ -5,13 +5,11 @@ exports.up = async (knex) => {
         users.increments("user_id");
         users.string("username", 200).notNullable().unique();
         users.string("password", 200).notNullable();
-        // users.string("collections", 200);
         users.string("contact_info", 200).notNullable();
       })
       .createTable("pins", (pins) => {
         pins.increments("pin_id");
         pins.string("maker", 200).notNullable();
-        // pins.string("tags", 200).notNullable();
         pins.string("imgURL", 200).notNullable();
       })
       .createTable("pins_have", (pins) => {
@@ -51,10 +49,23 @@ exports.up = async (knex) => {
           .inTable("pins")
           .onUpdate("CASCADE")
           .onDelete("CASCADE");
+      })
+      .createTable("pin_tags", (tags) => {
+        tags.increments("tags_id")
+        tags.string("tag_name", 200)
+        tags
+          .integer("pin_id")
+          .unsigned()
+          .notNullable()
+          .references("pin_id")
+          .inTable("pins")
+          .onUpdate("CASCADE")
+          .onDelete("CASCADE");
       });
   };
   
   exports.down = async (knex) => {
+    await knex.schema.dropTableIfExists("pin_tags");
     await knex.schema.dropTableIfExists("pins_iso");
     await knex.schema.dropTableIfExists("pins_have");
     await knex.schema.dropTableIfExists("pins");
