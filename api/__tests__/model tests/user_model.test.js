@@ -90,14 +90,48 @@ describe("testing all the user models", () => {
   });
 
   describe("update(user)", () => {
-    it.todo("returns updated user");
-    it.todo("filler");
-    it.todo("filler");
+    let res;
+    const oldProfile = {
+      user_id: 1,
+      username: "princess_serenity",
+      password: "123123",
+      contact_info: "serenity",
+    };
+
+    const updatedProfile = {
+      user_id: 1,
+      username: "neo_queen_serenity",
+      password: "123123",
+      contact_info: "@serenity",
+    };
+
+    beforeEach(async () => {
+      res = await Users.update(oldProfile.user_id, updatedProfile)
+    })
+    
+    it("returns updated user", () => {
+      expect(res.username).toBe(updatedProfile.username)
+      expect(res.contact_info).toBe(updatedProfile.contact_info)
+    });
+
+    it("finds the updated user in the db", async () => {
+      let user = await db("users")
+        .select("user_id", "username", "contact_info")
+        .where("user_id", oldProfile.user_id)
+        .first();
+
+      expect(user.username).toBe(updatedProfile.username);
+      expect(user.contact_info).toBe(updatedProfile.contact_info);
+    });
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot()
+    });
   });
 
   describe("removeUser(user_id)", () => {
-    it.todo("filler");
-    it.todo("filler");
-    it.todo("filler");
+    it.todo("finds the user to remove");
+    it.todo("removes the correct user");
+    it.todo("returns removed user");
+    it.todo("returns data in the correct shape");
   });
 });

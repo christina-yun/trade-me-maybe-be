@@ -49,3 +49,11 @@ Array [
   },
 ]
 `;
+
+exports[`testing all the user models update(user) returns data in the correct shape 1`] = `
+Object {
+  "contact_info": "@serenity",
+  "user_id": 1,
+  "username": "neo_queen_serenity",
+}
+`;

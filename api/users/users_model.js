@@ -34,7 +34,16 @@ async function create(newUser) {
     .first();
 }
 
-function update(user_id, user) {}
+async function update(user_id, user) {
+  await db("users")
+  .update(user)
+  .where("user_id", user_id)
+
+  return db("users")
+  .select("user_id", "username", "contact_info")
+  .where("user_id", user_id)
+  .first();
+}
 
 // Should make a separate thing for updating password as opposed to other information as pw info should never be displayed on the screen?
 //function updatePW(){}
@@ -47,6 +56,6 @@ module.exports = {
   findUserHave,
   create,
   update,
-//   updatePW,
+  //   updatePW,
   removeUser,
 };
