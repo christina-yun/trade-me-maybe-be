@@ -31,49 +31,66 @@ describe("testing all the user models", () => {
 
   describe("findUserIso(user_id)", () => {
     let res;
-    beforeEach(async()=>{
-        res = await Users.findUserIso(2)
-      })
+    beforeEach(async () => {
+      res = await Users.findUserIso(2);
+    });
 
     it("returns the correct # of ISOs", () => {
-        expect(res).toHaveLength(2)
+      expect(res).toHaveLength(2);
     });
 
     it("returns the correct ISOs", () => {
-        expect(res[0].maker).toBe("Astral Pins")
-        expect(res[1].maker).toBe("Moon Rabbit Pins")
+      expect(res[0].maker).toBe("Astral Pins");
+      expect(res[1].maker).toBe("Moon Rabbit Pins");
     });
 
     it("returns data in the correct shape", () => {
-        expect(res).toMatchSnapshot();
+      expect(res).toMatchSnapshot();
     });
   });
 
   describe("findUserHave(user_id)", () => {
     let res;
-    beforeEach(async()=>{
-        res = await Users.findUserHave(1)
-      })
+    beforeEach(async () => {
+      res = await Users.findUserHave(1);
+    });
     it("returns the correct # of pins a user has", () => {
-        expect(res).toHaveLength(2)
+      expect(res).toHaveLength(2);
     });
     it("returns the correct pins they have", () => {
-        expect(res[0].maker).toBe("Astral Pins")
-        expect(res[1].maker).toBe('Nyxxi Pins')
+      expect(res[0].maker).toBe("Astral Pins");
+      expect(res[1].maker).toBe("Nyxxi Pins");
     });
     it("returns data in the correct shape", () => {
-        expect(res).toMatchSnapshot();
+      expect(res).toMatchSnapshot();
     });
   });
 
   describe("create(user)", () => {
-    it.todo("filler");
-    it.todo("filler");
-    it.todo("filler");
+    let res;
+    const newProfile = {
+      username: "yuki_miaka",
+      password: "abc123",
+      contact_info: "miaka77cfns",
+    };
+    beforeEach(async () => {
+      res = await Users.create(newProfile);
+    });
+    it("returns newly-create profile", () => {
+      expect(res.username).toBe("yuki_miaka");
+      expect(res.contact_info).toBe("miaka77cfns");
+    });
+    it("adds a profile to the database", async () => {
+      const getAll = await db("users");
+      expect(getAll).toHaveLength(4);
+    });
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot();
+    });
   });
 
   describe("update(user)", () => {
-    it.todo("filler");
+    it.todo("returns updated user");
     it.todo("filler");
     it.todo("filler");
   });

@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`testing all the user models create(user) returns data in the correct shape 1`] = `
+Object {
+  "contact_info": "miaka77cfns",
+  "user_id": 4,
+  "username": "yuki_miaka",
+}
+`;
+
 exports[`testing all the user models findUser(user_id) returns data in the correct shape 1`] = `
 Object {
   "contact_info": "serenity",
