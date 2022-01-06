@@ -14,7 +14,7 @@ afterAll(async () => {
   await db.destroy();
 });
 
-describe("testing all the user models", () => {
+describe("testing all the user model functions", () => {
   describe("findUser(user_id)", () => {
     let res;
     beforeEach(async () => {

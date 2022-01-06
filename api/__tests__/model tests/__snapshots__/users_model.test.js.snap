@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing all the user model functions create(user) returns data in the correct shape 1`] = `
+Object {
+  "contact_info": "miaka77cfns",
+  "user_id": 4,
+  "username": "yuki_miaka",
+}
+`;
+
+exports[`testing all the user model functions findUser(user_id) returns data in the correct shape 1`] = `
+Object {
+  "contact_info": "serenity",
+  "user_id": 1,
+  "username": "princess_serenity",
+}
+`;
+
+exports[`testing all the user model functions findUserHave(user_id) returns data in the correct shape 1`] = `
+Array [
+  Object {
+    "imgurl": "https://www.instagram.com/p/CW4D3YwL8TjSuF-d0phzfcBvAaY_X_itXtPWI00/",
+    "maker": "Astral Pins",
+    "user_id": 1,
+    "username": "princess_serenity",
+  },
+  Object {
+    "imgurl": "https://www.instagram.com/p/CV4SIHYMior9IXyDEmBh-UBfnfFnx6k4Qda2eY0/",
+    "maker": "Nyxxi Pins",
+    "user_id": 1,
+    "username": "princess_serenity",
+  },
+]
+`;
+
+exports[`testing all the user model functions findUserIso(user_id) returns data in the correct shape 1`] = `
+Array [
+  Object {
+    "imgurl": "https://www.instagram.com/p/CW4D3YwL8TjSuF-d0phzfcBvAaY_X_itXtPWI00/",
+    "maker": "Astral Pins",
+    "user_id": 2,
+    "username": "rei_hino",
+  },
+  Object {
+    "imgurl": "https://www.instagram.com/p/CSiW5xiFs0H/",
+    "maker": "Moon Rabbit Pins",
+    "user_id": 2,
+    "username": "rei_hino",
+  },
+]
+`;
+
+exports[`testing all the user model functions removeUser(user_id) returns data in the correct shape 1`] = `
+Object {
+  "contact_info": "sailor_v",
+  "user_id": 3,
+  "username": "minako_aino",
+}
+`;
+
+exports[`testing all the user model functions update(user) returns data in the correct shape 1`] = `
+Object {
+  "contact_info": "@serenity",
+  "user_id": 1,
+  "username": "neo_queen_serenity",
+}
+`;
+
+exports[`testing all the user models create(user) returns data in the correct shape 1`] = `
+Object {
+  "contact_info": "miaka77cfns",
+  "user_id": 4,
+  "username": "yuki_miaka",
+}
+`;
+
+exports[`testing all the user models findUser(user_id) returns data in the correct shape 1`] = `
+Object {
+  "contact_info": "serenity",
+  "user_id": 1,
+  "username": "princess_serenity",
+}
+`;
+
+exports[`testing all the user models findUserHave(user_id) returns data in the correct shape 1`] = `
+Array [
+  Object {
+    "imgurl": "https://www.instagram.com/p/CW4D3YwL8TjSuF-d0phzfcBvAaY_X_itXtPWI00/",
+    "maker": "Astral Pins",
+    "user_id": 1,
+    "username": "princess_serenity",
+  },
+  Object {
+    "imgurl": "https://www.instagram.com/p/CV4SIHYMior9IXyDEmBh-UBfnfFnx6k4Qda2eY0/",
+    "maker": "Nyxxi Pins",
+    "user_id": 1,
+    "username": "princess_serenity",
+  },
+]
+`;
+
+exports[`testing all the user models findUserIso(user_id) returns data in the correct shape 1`] = `
+Array [
+  Object {
+    "imgurl": "https://www.instagram.com/p/CW4D3YwL8TjSuF-d0phzfcBvAaY_X_itXtPWI00/",
+    "maker": "Astral Pins",
+    "user_id": 2,
+    "username": "rei_hino",
+  },
+  Object {
+    "imgurl": "https://www.instagram.com/p/CSiW5xiFs0H/",
+    "maker": "Moon Rabbit Pins",
+    "user_id": 2,
+    "username": "rei_hino",
+  },
+]
+`;
+
+exports[`testing all the user models removeUser(user_id) returns data in the correct shape 1`] = `
+Object {
+  "contact_info": "sailor_v",
+  "user_id": 3,
+  "username": "minako_aino",
+}
+`;
+
+exports[`testing all the user models update(user) returns data in the correct shape 1`] = `
+Object {
+  "contact_info": "@serenity",
+  "user_id": 1,
+  "username": "neo_queen_serenity",
+}
+`;
