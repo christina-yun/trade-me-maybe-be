@@ -106,12 +106,12 @@ describe("testing all the user models", () => {
     };
 
     beforeEach(async () => {
-      res = await Users.update(oldProfile.user_id, updatedProfile)
-    })
-    
+      res = await Users.update(oldProfile.user_id, updatedProfile);
+    });
+
     it("returns updated user", () => {
-      expect(res.username).toBe(updatedProfile.username)
-      expect(res.contact_info).toBe(updatedProfile.contact_info)
+      expect(res.username).toBe(updatedProfile.username);
+      expect(res.contact_info).toBe(updatedProfile.contact_info);
     });
 
     it("finds the updated user in the db", async () => {
@@ -124,14 +124,36 @@ describe("testing all the user models", () => {
       expect(user.contact_info).toBe(updatedProfile.contact_info);
     });
     it("returns data in the correct shape", () => {
-      expect(res).toMatchSnapshot()
+      expect(res).toMatchSnapshot();
     });
   });
 
   describe("removeUser(user_id)", () => {
-    it.todo("finds the user to remove");
-    it.todo("removes the correct user");
-    it.todo("returns removed user");
-    it.todo("returns data in the correct shape");
+    let res;
+    const deletedProfile = {
+      user_id: 3,
+      username: "minako_aino",
+      password: "123123",
+      contact_info: "sailor_v",
+    };
+    beforeEach(async () => {
+      res = await Users.removeUser(deletedProfile.user_id);
+    });
+
+    it("removes the correct user", async () => {
+      const removed = await db("users")
+        .where("user_id", deletedProfile.user_id)
+        .first();
+
+      expect(removed).toBeUndefined();
+    });
+    it("returns removed user", () => {
+      expect(res.username).toBe(deletedProfile.username);
+      expect(res.contact_info).toBe(deletedProfile.contact_info);
+      expect(res.user_id).toBe(deletedProfile.user_id);
+    });
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot();
+    });
   });
 });

@@ -35,20 +35,27 @@ async function create(newUser) {
 }
 
 async function update(user_id, user) {
-  await db("users")
-  .update(user)
-  .where("user_id", user_id)
+  await db("users").update(user).where("user_id", user_id);
 
   return db("users")
-  .select("user_id", "username", "contact_info")
-  .where("user_id", user_id)
-  .first();
+    .select("user_id", "username", "contact_info")
+    .where("user_id", user_id)
+    .first();
 }
 
 // Should make a separate thing for updating password as opposed to other information as pw info should never be displayed on the screen?
 //function updatePW(){}
 
-function removeUser() {}
+async function removeUser(user_id) {
+  const removed_user = await db("users")
+    .select("user_id", "username", "contact_info")
+    .where("user_id", user_id)
+    .first();
+
+  await db("users").where("user_id", user_id).del();
+
+  return removed_user;
+}
 
 module.exports = {
   findUser,

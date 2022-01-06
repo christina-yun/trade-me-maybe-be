@@ -50,6 +50,14 @@ Array [
 ]
 `;
 
+exports[`testing all the user models removeUser(user_id) returns data in the correct shape 1`] = `
+Object {
+  "contact_info": "sailor_v",
+  "user_id": 3,
+  "username": "minako_aino",
+}
+`;
+
 exports[`testing all the user models update(user) returns data in the correct shape 1`] = `
 Object {
   "contact_info": "@serenity",
