@@ -80,7 +80,7 @@ describe("testing all the user model functions", () => {
       expect(res.username).toBe("yuki_miaka");
       expect(res.contact_info).toBe("miaka77cfns");
     });
-    it("adds a profile to the database", async () => {
+    it("adds a profile to the db", async () => {
       const getAll = await db("users");
       expect(getAll).toHaveLength(4);
     });
@@ -151,6 +151,10 @@ describe("testing all the user model functions", () => {
       expect(res.username).toBe(deletedProfile.username);
       expect(res.contact_info).toBe(deletedProfile.contact_info);
       expect(res.user_id).toBe(deletedProfile.user_id);
+    });
+    it("removes user from the db", async () => {
+      const allUsers = await db('users')
+      expect(allUsers).toHaveLength(2)
     });
     it("returns data in the correct shape", () => {
       expect(res).toMatchSnapshot();
