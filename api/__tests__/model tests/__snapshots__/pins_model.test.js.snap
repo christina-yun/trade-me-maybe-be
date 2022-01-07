@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing all the pin model functions findByMaker(maker) returns data in the correct shape 1`] = `
+Array [
+  Object {
+    "imgurl": "https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/",
+    "maker": "pastel shooting star",
+    "pin_id": 1,
+  },
+  Object {
+    "imgurl": "https://cdn.shopify.com/s/files/1/0557/3594/3342/products/20210707_162003_1024x1024@2x.jpg?v=1626969050",
+    "maker": "pastel shooting star",
+    "pin_id": 5,
+  },
+]
+`;
+
+exports[`testing all the pin model functions findPinById(pin_id) returns data in the correct shape 1`] = `
+Object {
+  "imgurl": "https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/",
+  "maker": "pastel shooting star",
+  "pin_id": 1,
+}
+`;

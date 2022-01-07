@@ -1,28 +1,32 @@
 const db = require("../data/db-config");
 
-function findPinById(pin_id){}
+function findById(pin_id) {
+  return db("pins").where("pin_id", pin_id).first();
+}
 
-function findPinsByMaker(){}
+function findByMaker(maker) {
+  return db("pins").where("maker", maker);
+}
 
-function findUsersIsoPin(){}
+function findUsersIsoPin() {}
 
-function findUsersWhoHavePin(){}
+function findUsersWhoHavePin() {}
 
-function findPinsByTag(){}
+function findByTag() {}
 
-function create(new_pin){}
+function create(new_pin) {}
 
-function update(pin_id, updated_pin){}
+function update(pin_id, updated_pin) {}
 
-function removePin(){}
+function remove() {}
 
-module.exports = { 
-    findPinById,
-    findPinsByMaker,
-    findUsersIsoPin,
-    findUsersWhoHavePin,
-    findPinsByTag,
-    create,
-    update,
-    removePin
+module.exports = {
+  findById,
+  findByMaker,
+  findUsersIsoPin,
+  findUsersWhoHavePin,
+  findByTag,
+  create,
+  update,
+  remove,
 };

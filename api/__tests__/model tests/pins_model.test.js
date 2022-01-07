@@ -1,37 +1,95 @@
 const db = require("../../data/db-config");
 const Pins = require("../../pins/pins_model");
 
+beforeAll(async () => {
+  await db.migrate.rollback();
+  await db.migrate.latest();
+});
+
+beforeEach(async () => {
+  await db.seed.run();
+});
+
+afterAll(async () => {
+  await db.destroy();
+});
+
 describe("testing all the pin model functions", () => {
-    describe("findPinById(pin_id)", () => {
-        it.todo("something")
-    })
+  describe("findPinById(pin_id)", () => {
+    let res;
 
-    describe("findPinsByMaker(maker)", () => {
-        it.todo("something")
-    })
+    const pin = {
+      pin_id: 1,
+      maker: "pastel shooting star",
+      imgurl:
+        "https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/",
+    };
 
-    describe("findUsersIsoPin", () => {
-        it.todo("something")
-    })
+    beforeEach(async () => {
+      res = await Pins.findById(pin.pin_id);
+    });
 
-    describe("findUsersWhoHavePin", () => {
-        it.todo("something")
-    })
+    it("finds the correct pin by pin_id", () => {
+      expect(res.maker).toBe(pin.maker);
+      expect(res.imgurl).toBe(pin.imgurl);
+    });
 
-    describe("findPinsByTag(tag_name)", () => {
-        it.todo("something")
-    })
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot();
+    });
+  });
 
-    describe("create(new_pin)", () => {
-        it.todo("something")
-    })
+  describe("findByMaker(maker)", () => {
+    let res;
+    beforeEach(async () => {
+      res = await Pins.findByMaker("pastel shooting star");
+    });
+    it("returns correct # of pins by that maker", () => {
+      expect(res).toHaveLength(2);
+    });
+    it("returns the correct pins", () => {
+      expect(res[0].pin_id).toBe(1);
+      expect(res[1].pin_id).toBe(5);
+      expect(res[0].maker).toBe("pastel shooting star");
+      expect(res[1].maker).toBe("pastel shooting star");
+    });
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot();
+    });
+  });
 
-    describe("update(pin_id, updated_pin)", () => {
-        it.todo("something")
-    })
+  describe("findUsersIsoPin", () => {
+    it.todo("returns correct # of users ISO that pin");
+    it.todo("returns a list of users ISO that pin");
+    it.todo("returns data in the correct shape");
+  });
 
-    describe("removePin(pin_id)", () => {
-        it.todo("something")
-    })
+  describe("findUsersWhoHavePin", () => {
+    it.todo("returns correct # users who have the pin FT");
+    it.todo("returns a list of users who have the pin FT");
+    it.todo("returns data in the correct shape");
+  });
 
+  describe("findByTag(tag_name)", () => {
+    it.todo("something");
+  });
+
+  describe("create(new_pin)", () => {
+    it.todo("returns the newly-created pin");
+    it.todo("adds a pin to the db");
+    it.todo("returns data in the correct shape");
+  });
+
+  describe("update(pin_id, updated_pin)", () => {
+    it.todo("returns updated pin");
+    it.todo("finds the updated pin the db");
+    it.todo("returns data in the correct shape");
+  });
+
+  describe("remove(pin_id)", () => {
+    it.todo("removes the correct pin");
+    it.todo("returns removed pin");
+    it.todo("removes pin from the db");
+    it.todo("returns data in the correct shape");
+  });
 });
