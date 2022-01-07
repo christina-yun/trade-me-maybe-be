@@ -20,13 +20,13 @@ exports[`testing all the user model functions findUserHave(user_id) returns data
 Array [
   Object {
     "imgurl": "https://www.instagram.com/p/CW4D3YwL8TjSuF-d0phzfcBvAaY_X_itXtPWI00/",
-    "maker": "Astral Pins",
+    "maker": "astral pins",
     "user_id": 1,
     "username": "princess_serenity",
   },
   Object {
     "imgurl": "https://www.instagram.com/p/CV4SIHYMior9IXyDEmBh-UBfnfFnx6k4Qda2eY0/",
-    "maker": "Nyxxi Pins",
+    "maker": "nyxxi pins",
     "user_id": 1,
     "username": "princess_serenity",
   },
@@ -37,13 +37,13 @@ exports[`testing all the user model functions findUserIso(user_id) returns data 
 Array [
   Object {
     "imgurl": "https://www.instagram.com/p/CW4D3YwL8TjSuF-d0phzfcBvAaY_X_itXtPWI00/",
-    "maker": "Astral Pins",
+    "maker": "astral pins",
     "user_id": 2,
     "username": "rei_hino",
   },
   Object {
     "imgurl": "https://www.instagram.com/p/CSiW5xiFs0H/",
-    "maker": "Moon Rabbit Pins",
+    "maker": "moon rabbit pins",
     "user_id": 2,
     "username": "rei_hino",
   },

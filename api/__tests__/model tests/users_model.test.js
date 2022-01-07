@@ -40,8 +40,8 @@ describe("testing all the user model functions", () => {
     });
 
     it("returns the correct ISOs", () => {
-      expect(res[0].maker).toBe("Astral Pins");
-      expect(res[1].maker).toBe("Moon Rabbit Pins");
+      expect(res[0].maker).toBe("astral pins");
+      expect(res[1].maker).toBe("moon rabbit pins");
     });
 
     it("returns data in the correct shape", () => {
@@ -58,8 +58,8 @@ describe("testing all the user model functions", () => {
       expect(res).toHaveLength(2);
     });
     it("returns the correct pins they have", () => {
-      expect(res[0].maker).toBe("Astral Pins");
-      expect(res[1].maker).toBe("Nyxxi Pins");
+      expect(res[0].maker).toBe("astral pins");
+      expect(res[1].maker).toBe("nyxxi pins");
     });
     it("returns data in the correct shape", () => {
       expect(res).toMatchSnapshot();
