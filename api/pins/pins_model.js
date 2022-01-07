@@ -8,7 +8,13 @@ function findByMaker(maker) {
   return db("pins").where("maker", maker);
 }
 
-function findUsersIsoPin() {}
+function findUsersIsoPin(pin_id) {
+  return db("users as u")
+    .leftJoin("pins_iso as iso", "u.user_id", "iso.user_id")
+    .leftJoin("pins as p", "p.pin_id", "iso.pin_id")
+    .select("p.pin_id", "u.username")
+    .where("p.pin_id", pin_id);
+}
 
 function findUsersWhoHavePin() {}
 

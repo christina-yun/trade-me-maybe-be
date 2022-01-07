@@ -22,3 +22,16 @@ Object {
   "pin_id": 1,
 }
 `;
+
+exports[`testing all the pin model functions findUsersIsoPin returns data in the correct shape 1`] = `
+Array [
+  Object {
+    "pin_id": 3,
+    "username": "princess_serenity",
+  },
+  Object {
+    "pin_id": 3,
+    "username": "rei_hino",
+  },
+]
+`;

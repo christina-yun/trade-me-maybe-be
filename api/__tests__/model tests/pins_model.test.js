@@ -59,9 +59,22 @@ describe("testing all the pin model functions", () => {
   });
 
   describe("findUsersIsoPin", () => {
-    it.todo("returns correct # of users ISO that pin");
-    it.todo("returns a list of users ISO that pin");
-    it.todo("returns data in the correct shape");
+    let res;
+
+    beforeEach(async () => {
+      res = await Pins.findUsersIsoPin(3);
+    });
+
+    it("returns correct # of users ISO that pin", () => {
+      expect(res).toHaveLength(2);
+    });
+    it("returns a list of users ISO that pin", () => {
+      expect(res[0].username).toBe("princess_serenity");
+      expect(res[1].username).toBe("rei_hino");
+    });
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot();
+    });
   });
 
   describe("findUsersWhoHavePin", () => {
