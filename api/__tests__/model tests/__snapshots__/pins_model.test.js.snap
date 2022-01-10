@@ -79,3 +79,11 @@ Array [
   },
 ]
 `;
+
+exports[`testing all the pin model functions update(pin_id, updated_pin) returns data in the correct shape 1`] = `
+Object {
+  "imgurl": "https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/",
+  "maker": "Pastel Shooting Star",
+  "pin_id": 1,
+}
+`;

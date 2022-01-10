@@ -42,7 +42,14 @@ async function create(new_pin) {
     .first();
 }
 
-function update(pin_id, updated_pin) {}
+async function update(pin_id, updated_pin) {
+  await db("pins").update(updated_pin).where("pin_id", pin_id);
+
+  return db("pins")
+    .select("pin_id", "maker", "imgurl")
+    .where("pin_id", pin_id)
+    .first();
+}
 
 function remove(pin_id) {}
 

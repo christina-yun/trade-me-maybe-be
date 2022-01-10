@@ -144,9 +144,31 @@ describe("testing all the pin model functions", () => {
   });
 
   describe("update(pin_id, updated_pin)", () => {
-    it.todo("returns updated pin");
-    it.todo("finds the updated pin the db");
-    it.todo("returns data in the correct shape");
+    let res;
+    
+    const updated_pin = {
+      pin_id: 1,
+      maker: "Pastel Shooting Star",
+      imgurl:
+        "https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/",
+    }
+
+    beforeEach(async() => {
+      res = await Pins.update(1, updated_pin)
+    })
+    it("returns updated pin", () => {
+      expect(res.pin_id).toBe(updated_pin.pin_id)
+      expect(res.maker).toBe(updated_pin.maker)
+      expect(res.imgurl).toBe(updated_pin.imgurl)
+    });
+    it("finds the updated pin the db", async() => {
+      let get_pin = await db('pins').where("pin_id", 1).first()
+
+      expect(get_pin.maker).toBe(updated_pin.maker)
+    });
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot()
+    });
   });
 
   describe("remove(pin_id)", () => {
