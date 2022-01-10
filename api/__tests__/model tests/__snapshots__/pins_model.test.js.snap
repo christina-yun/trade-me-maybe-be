@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`testing all the pin model functions create(new_pin) returns data in the correct shape 1`] = `
+Object {
+  "imgurl": "https://www.instagram.com/p/CQjnfaOsYo9v8EFjjpZHNFTEMFkXsBNKaOgcDY0/",
+  "maker": "disney lagoon",
+  "pin_id": 6,
+}
+`;
+
 exports[`testing all the pin model functions findByMaker(maker) returns data in the correct shape 1`] = `
 Array [
   Object {

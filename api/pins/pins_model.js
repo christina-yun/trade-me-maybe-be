@@ -31,7 +31,16 @@ function findByTag(tag_name) {
     .where("tags.tag_name", tag_name);
 }
 
-function create(new_pin) {}
+async function create(new_pin) {
+  const new_pin_id = await db("pins")
+    .insert(new_pin, "pin_id")
+    .returning("pin_id");
+
+  return db("pins")
+    .select("pin_id", "maker", "imgurl")
+    .where("pin_id", parseInt(new_pin_id))
+    .first();
+}
 
 function update(pin_id, updated_pin) {}
 

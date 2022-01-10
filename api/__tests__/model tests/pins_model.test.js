@@ -115,9 +115,32 @@ describe("testing all the pin model functions", () => {
   });
 
   describe("create(new_pin)", () => {
-    it.todo("returns the newly-created pin");
-    it.todo("adds a pin to the db");
-    it.todo("returns data in the correct shape");
+    let res;
+
+    const new_pin = {
+      maker: "disney lagoon",
+      imgurl:
+        "https://www.instagram.com/p/CQjnfaOsYo9v8EFjjpZHNFTEMFkXsBNKaOgcDY0/",
+    };
+
+    beforeEach(async () => {
+      res = await Pins.create(new_pin);
+    });
+    it("returns the newly-created pin", () => {
+      expect(res.pin_id).toBe(6);
+      expect(res.maker).toBe("disney lagoon");
+      expect(res.imgurl).toBe(
+        "https://www.instagram.com/p/CQjnfaOsYo9v8EFjjpZHNFTEMFkXsBNKaOgcDY0/"
+      );
+    });
+    it("adds a pin to the db", async() => {
+      const all_pins = await db("pins")
+
+      expect(all_pins).toHaveLength(6)
+    });
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot();
+    });
   });
 
   describe("update(pin_id, updated_pin)", () => {
