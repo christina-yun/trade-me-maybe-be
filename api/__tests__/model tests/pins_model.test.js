@@ -78,9 +78,21 @@ describe("testing all the pin model functions", () => {
   });
 
   describe("findUsersWhoHavePin", () => {
-    it.todo("returns correct # users who have the pin FT");
-    it.todo("returns a list of users who have the pin FT");
-    it.todo("returns data in the correct shape");
+    let res;
+
+    beforeEach(async () => {
+      res = await Pins.findUsersWhoHavePin(4);
+    });
+    it("returns correct # users who have the pin FT", () => {
+      expect(res).toHaveLength(2);
+    });
+    it("returns a list of users who have the pin FT", () => {
+      expect(res[0].username).toBe("princess_serenity");
+      expect(res[1].username).toBe("minako_aino");
+    });
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot();
+    });
   });
 
   describe("findByTag(tag_name)", () => {

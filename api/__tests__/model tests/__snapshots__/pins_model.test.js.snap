@@ -35,3 +35,16 @@ Array [
   },
 ]
 `;
+
+exports[`testing all the pin model functions findUsersWhoHavePin returns data in the correct shape 1`] = `
+Array [
+  Object {
+    "pin_id": 4,
+    "username": "princess_serenity",
+  },
+  Object {
+    "pin_id": 4,
+    "username": "minako_aino",
+  },
+]
+`;

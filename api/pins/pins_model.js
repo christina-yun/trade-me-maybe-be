@@ -16,15 +16,21 @@ function findUsersIsoPin(pin_id) {
     .where("p.pin_id", pin_id);
 }
 
-function findUsersWhoHavePin() {}
+function findUsersWhoHavePin(pin_id) {
+  return db("users as u")
+    .leftJoin("pins_have as have", "u.user_id", "have.user_id")
+    .leftJoin("pins as p", "p.pin_id", "have.pin_id")
+    .select("p.pin_id", "u.username")
+    .where("p.pin_id", pin_id);
+}
 
-function findByTag() {}
+function findByTag(tag_name) {}
 
 function create(new_pin) {}
 
 function update(pin_id, updated_pin) {}
 
-function remove() {}
+function remove(pin_id) {}
 
 module.exports = {
   findById,
