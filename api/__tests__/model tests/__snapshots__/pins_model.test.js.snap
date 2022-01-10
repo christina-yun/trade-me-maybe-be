@@ -80,6 +80,14 @@ Array [
 ]
 `;
 
+exports[`testing all the pin model functions remove(pin_id) returns data in the correct shape 1`] = `
+Object {
+  "imgurl": "https://www.instagram.com/p/CV4SIHYMior9IXyDEmBh-UBfnfFnx6k4Qda2eY0/",
+  "maker": "nyxxi pins",
+  "pin_id": 4,
+}
+`;
+
 exports[`testing all the pin model functions update(pin_id, updated_pin) returns data in the correct shape 1`] = `
 Object {
   "imgurl": "https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/",

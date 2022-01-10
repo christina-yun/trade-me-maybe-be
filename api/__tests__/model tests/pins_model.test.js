@@ -133,10 +133,10 @@ describe("testing all the pin model functions", () => {
         "https://www.instagram.com/p/CQjnfaOsYo9v8EFjjpZHNFTEMFkXsBNKaOgcDY0/"
       );
     });
-    it("adds a pin to the db", async() => {
-      const all_pins = await db("pins")
+    it("adds a pin to the db", async () => {
+      const all_pins = await db("pins");
 
-      expect(all_pins).toHaveLength(6)
+      expect(all_pins).toHaveLength(6);
     });
     it("returns data in the correct shape", () => {
       expect(res).toMatchSnapshot();
@@ -145,36 +145,64 @@ describe("testing all the pin model functions", () => {
 
   describe("update(pin_id, updated_pin)", () => {
     let res;
-    
+
     const updated_pin = {
       pin_id: 1,
       maker: "Pastel Shooting Star",
       imgurl:
         "https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/",
-    }
+    };
 
-    beforeEach(async() => {
-      res = await Pins.update(1, updated_pin)
-    })
-    it("returns updated pin", () => {
-      expect(res.pin_id).toBe(updated_pin.pin_id)
-      expect(res.maker).toBe(updated_pin.maker)
-      expect(res.imgurl).toBe(updated_pin.imgurl)
+    beforeEach(async () => {
+      res = await Pins.update(1, updated_pin);
     });
-    it("finds the updated pin the db", async() => {
-      let get_pin = await db('pins').where("pin_id", 1).first()
+    it("returns updated pin", () => {
+      expect(res.pin_id).toBe(updated_pin.pin_id);
+      expect(res.maker).toBe(updated_pin.maker);
+      expect(res.imgurl).toBe(updated_pin.imgurl);
+    });
+    it("finds the updated pin the db", async () => {
+      let get_pin = await db("pins").where("pin_id", 1).first();
 
-      expect(get_pin.maker).toBe(updated_pin.maker)
+      expect(get_pin.maker).toBe(updated_pin.maker);
     });
     it("returns data in the correct shape", () => {
-      expect(res).toMatchSnapshot()
+      expect(res).toMatchSnapshot();
     });
   });
 
   describe("remove(pin_id)", () => {
-    it.todo("removes the correct pin");
-    it.todo("returns removed pin");
-    it.todo("removes pin from the db");
-    it.todo("returns data in the correct shape");
+    let res;
+
+    const removed_pin = {
+      pin_id: 4,
+      maker: "nyxxi pins",
+      imgurl:
+        "https://www.instagram.com/p/CV4SIHYMior9IXyDEmBh-UBfnfFnx6k4Qda2eY0/",
+    };
+
+    beforeEach(async () => {
+      res = await Pins.remove(removed_pin.pin_id);
+    });
+    it("returns removed pin", () => {
+      expect(res.pin_id).toBe(4);
+      expect(res.maker).toBe(removed_pin.maker);
+      expect(res.imgurl).toBe(removed_pin.imgurl);
+    });
+    it("removes the correct pin", async () => {
+      const removed = await db("pins")
+        .where("pin_id", removed_pin.pin_id)
+        .first();
+
+      expect(removed).toBeUndefined();
+    });
+    it("removes pin from the db", async() => {
+      const all_pins = await db('pins')
+
+      expect(all_pins).toHaveLength(4)
+    });
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot()
+    });
   });
 });

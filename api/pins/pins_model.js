@@ -51,7 +51,16 @@ async function update(pin_id, updated_pin) {
     .first();
 }
 
-function remove(pin_id) {}
+async function remove(pin_id) {
+  const removed_pin = await db("pins")
+    .select("pin_id", "maker", "imgurl")
+    .where("pin_id", pin_id)
+    .first();
+
+  await db("pins").where("pin_id", pin_id).del();
+
+  return removed_pin;
+}
 
 module.exports = {
   findById,
