@@ -96,7 +96,22 @@ describe("testing all the pin model functions", () => {
   });
 
   describe("findByTag(tag_name)", () => {
-    it.todo("something");
+    let res;
+
+    beforeEach(async () => {
+      res = await Pins.findByTag("princess serenity");
+    });
+    it("returns correct number of pins with that tag", () => {
+      expect(res).toHaveLength(3);
+    });
+    it("returns correct pins", () => {
+      expect(res[0].maker).toBe("astral pins");
+      expect(res[1].maker).toBe("moon rabbit pins");
+      expect(res[2].maker).toBe("nyxxi pins");
+    });
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot();
+    });
   });
 
   describe("create(new_pin)", () => {

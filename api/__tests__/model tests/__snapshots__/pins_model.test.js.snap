@@ -15,6 +15,29 @@ Array [
 ]
 `;
 
+exports[`testing all the pin model functions findByTag(tag_name) returns data in the correct shape 1`] = `
+Array [
+  Object {
+    "imgurl": "https://www.instagram.com/p/CW4D3YwL8TjSuF-d0phzfcBvAaY_X_itXtPWI00/",
+    "maker": "astral pins",
+    "pin_id": 2,
+    "tag_name": "princess serenity",
+  },
+  Object {
+    "imgurl": "https://www.instagram.com/p/CSiW5xiFs0H/",
+    "maker": "moon rabbit pins",
+    "pin_id": 3,
+    "tag_name": "princess serenity",
+  },
+  Object {
+    "imgurl": "https://www.instagram.com/p/CV4SIHYMior9IXyDEmBh-UBfnfFnx6k4Qda2eY0/",
+    "maker": "nyxxi pins",
+    "pin_id": 4,
+    "tag_name": "princess serenity",
+  },
+]
+`;
+
 exports[`testing all the pin model functions findPinById(pin_id) returns data in the correct shape 1`] = `
 Object {
   "imgurl": "https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/",

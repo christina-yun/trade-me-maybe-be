@@ -24,7 +24,12 @@ function findUsersWhoHavePin(pin_id) {
     .where("p.pin_id", pin_id);
 }
 
-function findByTag(tag_name) {}
+function findByTag(tag_name) {
+  return db("pins as p")
+    .leftJoin("pin_tags as tags", "p.pin_id", "tags.pin_id")
+    .select("p.pin_id", "p.maker", "p.imgurl", "tags.tag_name")
+    .where("tags.tag_name", tag_name);
+}
 
 function create(new_pin) {}
 
