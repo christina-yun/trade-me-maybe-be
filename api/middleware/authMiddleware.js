@@ -23,16 +23,8 @@ const restricted = (req, res, next) => {
   });
 };
 
-//validation middleware
-const checkUserExists = async (req, res, next) => {
-  const validUsername = await Users.findUser({ username: req.body.username });
-
-  if (!validUsername) {
-    next({ status: 404, message: "That user doesn't exist" });
-  } else {
-      next();
-  }
-};
+//validation middleware for registration
+//TODO write yup validation schema for username and contact info
 
 const validateUsername = async (req, res, next) => {
   const { username } = req.body;
@@ -57,20 +49,6 @@ const validatePassword = async (req, res, next) => {
     next({ status: 401, message: "Password must be at least 12 characters" });
   } else {
     next();
-  }
-};
-
-const checkPasswordCorrect = async (req, res, next) => {
-  let { username, password } = req.body;
-
-  const validUser = await Users.findUserHashedPW(username);
-
-  if (validUser && bcrypt.compareSync(password, validUser.password)) {
-    const token = tokenBuilder(validUser);
-    req.token = token;
-    next();
-  } else {
-    next({ status: 401, message: "Invalid credentials" });
   }
 };
 
@@ -100,12 +78,38 @@ const hashThePassword = (req, res, next) => {
   next();
 };
 
+// verification middleware for login
+
+const checkUserExists = async (req, res, next) => {
+  const validUsername = await Users.findUser({ username: req.body.username });
+
+  if (!validUsername) {
+    next({ status: 404, message: "That user doesn't exist" });
+  } else {
+    next();
+  }
+};
+
+const checkPasswordCorrect = async (req, res, next) => {
+  let { username, password } = req.body;
+
+  const validUser = await Users.findUserHashedPW(username);
+
+  if (validUser && bcrypt.compareSync(password, validUser.password)) {
+    const token = tokenBuilder(validUser);
+    req.token = token;
+    next();
+  } else {
+    next({ status: 401, message: "Invalid credentials" });
+  }
+};
+
 module.exports = {
   restricted,
-  checkUserExists,
   validateUsername,
   validatePassword,
-  checkPasswordCorrect,
-  validateContact,
   hashThePassword,
+  validateContact,
+  checkUserExists,
+  checkPasswordCorrect,
 };
