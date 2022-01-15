@@ -31,6 +31,8 @@ function findByTag(tag_name) {
     .where("tags.tag_name", tag_name);
 }
 
+//TODO createTag()
+
 async function create(new_pin) {
   const new_pin_id = await db("pins")
     .insert(new_pin, "pin_id")

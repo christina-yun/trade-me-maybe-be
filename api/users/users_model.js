@@ -7,7 +7,6 @@ function findUser(filter) {
     .first();
 }
 
-//TODO write tests for this
 function findUserHashedPW(username) {
   return db("users")
     .select("user_id", "username", "password", )
