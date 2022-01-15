@@ -20,7 +20,7 @@ describe("testing all the pin model functions", () => {
 
     const pin = {
       pin_id: 1,
-      maker: "pastel shooting star",
+      maker: "pastel-shooting-star",
       imgurl:
         "https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/",
     };
@@ -42,7 +42,7 @@ describe("testing all the pin model functions", () => {
   describe("findByMaker(maker)", () => {
     let res;
     beforeEach(async () => {
-      res = await Pins.findByMaker("pastel shooting star");
+      res = await Pins.findByMaker("pastel-shooting-star");
     });
     it("returns correct # of pins by that maker", () => {
       expect(res).toHaveLength(2);
@@ -50,8 +50,8 @@ describe("testing all the pin model functions", () => {
     it("returns the correct pins", () => {
       expect(res[0].pin_id).toBe(1);
       expect(res[1].pin_id).toBe(5);
-      expect(res[0].maker).toBe("pastel shooting star");
-      expect(res[1].maker).toBe("pastel shooting star");
+      expect(res[0].maker).toBe("pastel-shooting-star");
+      expect(res[1].maker).toBe("pastel-shooting-star");
     });
     it("returns data in the correct shape", () => {
       expect(res).toMatchSnapshot();
@@ -99,36 +99,36 @@ describe("testing all the pin model functions", () => {
     let res;
 
     beforeEach(async () => {
-      res = await Pins.findByTag("princess serenity");
+      res = await Pins.findByTag("princess-serenity");
     });
     it("returns correct number of pins with that tag", () => {
       expect(res).toHaveLength(3);
     });
     it("returns correct pins", () => {
-      expect(res[0].maker).toBe("astral pins");
-      expect(res[1].maker).toBe("moon rabbit pins");
-      expect(res[2].maker).toBe("nyxxi pins");
+      expect(res[0].maker).toBe("astral-pins");
+      expect(res[1].maker).toBe("moon-rabbit-pins");
+      expect(res[2].maker).toBe("nyxxi-pins");
     });
     it("returns data in the correct shape", () => {
       expect(res).toMatchSnapshot();
     });
   });
 
-  describe("create(new_pin)", () => {
+  describe("createPin(new_pin)", () => {
     let res;
 
     const new_pin = {
-      maker: "disney lagoon",
+      maker: "disney-lagoon",
       imgurl:
         "https://www.instagram.com/p/CQjnfaOsYo9v8EFjjpZHNFTEMFkXsBNKaOgcDY0/",
     };
 
     beforeEach(async () => {
-      res = await Pins.create(new_pin);
+      res = await Pins.createPin(new_pin);
     });
     it("returns the newly-created pin", () => {
       expect(res.pin_id).toBe(6);
-      expect(res.maker).toBe("disney lagoon");
+      expect(res.maker).toBe("disney-lagoon");
       expect(res.imgurl).toBe(
         "https://www.instagram.com/p/CQjnfaOsYo9v8EFjjpZHNFTEMFkXsBNKaOgcDY0/"
       );
@@ -143,18 +143,18 @@ describe("testing all the pin model functions", () => {
     });
   });
 
-  describe("update(pin_id, updated_pin)", () => {
+  describe("updatePin(pin_id, updated_pin)", () => {
     let res;
 
     const updated_pin = {
       pin_id: 1,
-      maker: "Pastel Shooting Star",
+      maker: "pastel-shooting-star",
       imgurl:
         "https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/",
     };
 
     beforeEach(async () => {
-      res = await Pins.update(1, updated_pin);
+      res = await Pins.updatePin(1, updated_pin);
     });
     it("returns updated pin", () => {
       expect(res.pin_id).toBe(updated_pin.pin_id);
@@ -171,18 +171,18 @@ describe("testing all the pin model functions", () => {
     });
   });
 
-  describe("remove(pin_id)", () => {
+  describe("removePin(pin_id)", () => {
     let res;
 
     const removed_pin = {
       pin_id: 4,
-      maker: "nyxxi pins",
+      maker: "nyxxi-pins",
       imgurl:
         "https://www.instagram.com/p/CV4SIHYMior9IXyDEmBh-UBfnfFnx6k4Qda2eY0/",
     };
 
     beforeEach(async () => {
-      res = await Pins.remove(removed_pin.pin_id);
+      res = await Pins.removePin(removed_pin.pin_id);
     });
     it("returns removed pin", () => {
       expect(res.pin_id).toBe(4);

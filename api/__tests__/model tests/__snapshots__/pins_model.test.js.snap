@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing all the pin model functions create(new_pin) returns data in the correct shape 1`] = `
+exports[`testing all the pin model functions createPin(new_pin) returns data in the correct shape 1`] = `
 Object {
   "imgurl": "https://www.instagram.com/p/CQjnfaOsYo9v8EFjjpZHNFTEMFkXsBNKaOgcDY0/",
-  "maker": "disney lagoon",
+  "maker": "disney-lagoon",
   "pin_id": 6,
 }
 `;
@@ -12,12 +12,12 @@ exports[`testing all the pin model functions findByMaker(maker) returns data in 
 Array [
   Object {
     "imgurl": "https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/",
-    "maker": "pastel shooting star",
+    "maker": "pastel-shooting-star",
     "pin_id": 1,
   },
   Object {
     "imgurl": "https://cdn.shopify.com/s/files/1/0557/3594/3342/products/20210707_162003_1024x1024@2x.jpg?v=1626969050",
-    "maker": "pastel shooting star",
+    "maker": "pastel-shooting-star",
     "pin_id": 5,
   },
 ]
@@ -27,21 +27,21 @@ exports[`testing all the pin model functions findByTag(tag_name) returns data in
 Array [
   Object {
     "imgurl": "https://www.instagram.com/p/CW4D3YwL8TjSuF-d0phzfcBvAaY_X_itXtPWI00/",
-    "maker": "astral pins",
+    "maker": "astral-pins",
     "pin_id": 2,
-    "tag_name": "princess serenity",
+    "tag_name": "princess-serenity",
   },
   Object {
     "imgurl": "https://www.instagram.com/p/CSiW5xiFs0H/",
-    "maker": "moon rabbit pins",
+    "maker": "moon-rabbit-pins",
     "pin_id": 3,
-    "tag_name": "princess serenity",
+    "tag_name": "princess-serenity",
   },
   Object {
     "imgurl": "https://www.instagram.com/p/CV4SIHYMior9IXyDEmBh-UBfnfFnx6k4Qda2eY0/",
-    "maker": "nyxxi pins",
+    "maker": "nyxxi-pins",
     "pin_id": 4,
-    "tag_name": "princess serenity",
+    "tag_name": "princess-serenity",
   },
 ]
 `;
@@ -49,7 +49,7 @@ Array [
 exports[`testing all the pin model functions findPinById(pin_id) returns data in the correct shape 1`] = `
 Object {
   "imgurl": "https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/",
-  "maker": "pastel shooting star",
+  "maker": "pastel-shooting-star",
   "pin_id": 1,
 }
 `;
@@ -80,18 +80,18 @@ Array [
 ]
 `;
 
-exports[`testing all the pin model functions remove(pin_id) returns data in the correct shape 1`] = `
+exports[`testing all the pin model functions removePin(pin_id) returns data in the correct shape 1`] = `
 Object {
   "imgurl": "https://www.instagram.com/p/CV4SIHYMior9IXyDEmBh-UBfnfFnx6k4Qda2eY0/",
-  "maker": "nyxxi pins",
+  "maker": "nyxxi-pins",
   "pin_id": 4,
 }
 `;
 
-exports[`testing all the pin model functions update(pin_id, updated_pin) returns data in the correct shape 1`] = `
+exports[`testing all the pin model functions updatePin(pin_id, updated_pin) returns data in the correct shape 1`] = `
 Object {
   "imgurl": "https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/",
-  "maker": "Pastel Shooting Star",
+  "maker": "pastel-shooting-star",
   "pin_id": 1,
 }
 `;
