@@ -8,9 +8,9 @@ Object {
 }
 `;
 
-exports[`testing all the user model functions findUser(user_id) returns data in the correct shape 1`] = `
+exports[`testing all the user model functions findUser(filter) returns data in the correct shape 1`] = `
 Object {
-  "contact_info": "serenity",
+  "contact_info": "@serenity",
   "user_id": 1,
   "username": "princess_serenity",
 }

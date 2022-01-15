@@ -15,10 +15,10 @@ afterAll(async () => {
 });
 
 describe("testing all the user model functions", () => {
-  describe("findUser(user_id)", () => {
+  describe("findUser(filter)", () => {
     let res;
     beforeEach(async () => {
-      res = await Users.findUser(1);
+      res = await Users.findUser({ user_id: 1 });
     });
     it("finds the correct user by user_id", () => {
       expect(res.username).toBe("princess_serenity");
@@ -28,6 +28,8 @@ describe("testing all the user model functions", () => {
       expect(res).toMatchSnapshot();
     });
   });
+
+  //TODO write tests for findUserHashedPW(username)
 
   describe("findUserIso(user_id)", () => {
     let res;
