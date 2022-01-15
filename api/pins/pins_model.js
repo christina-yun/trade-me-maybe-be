@@ -24,15 +24,6 @@ function findUsersWhoHavePin(pin_id) {
     .where("p.pin_id", pin_id);
 }
 
-function findByTag(tag_name) {
-  return db("pins as p")
-    .leftJoin("pin_tags as tags", "p.pin_id", "tags.pin_id")
-    .select("p.pin_id", "p.maker", "p.imgurl", "tags.tag_name")
-    .where("tags.tag_name", tag_name);
-}
-
-//TODO createTag()
-
 async function create(new_pin) {
   const new_pin_id = await db("pins")
     .insert(new_pin, "pin_id")
@@ -63,6 +54,19 @@ async function remove(pin_id) {
 
   return removed_pin;
 }
+
+// Tags stuff
+
+function findByTag(tag_name) {
+  return db("pins as p")
+    .leftJoin("pin_tags as tags", "p.pin_id", "tags.pin_id")
+    .select("p.pin_id", "p.maker", "p.imgurl", "tags.tag_name")
+    .where("tags.tag_name", tag_name);
+}
+
+//TODO createTag()
+
+//TODO deleteTag()
 
 module.exports = {
   findById,
