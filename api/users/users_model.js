@@ -1,9 +1,9 @@
 const db = require("../data/db-config");
 
-function findUser(user_id) {
+function findUser(filter) {
   return db("users")
     .select("user_id", "username", "contact_info")
-    .where("user_id", user_id)
+    .where(filter)
     .first();
 }
 
