@@ -7,6 +7,14 @@ function findUser(filter) {
     .first();
 }
 
+//TODO write tests for this
+function findUserHashedPW(username) {
+  return db("users")
+    .select("user_id", "username", "password", )
+    .where('username', username)
+    .first();
+}
+
 function findUserIso(user_id) {
   return db("users as u")
     .leftJoin("pins_iso as iso", "u.user_id", "iso.user_id")
@@ -59,6 +67,7 @@ async function removeUser(user_id) {
 
 module.exports = {
   findUser,
+  findUserHashedPW,
   findUserIso,
   findUserHave,
   create,

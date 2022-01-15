@@ -29,6 +29,8 @@ const checkUserExists = async (req, res, next) => {
 
   if (!validUsername) {
     next({ status: 404, message: "That user doesn't exist" });
+  } else {
+      next();
   }
 };
 
@@ -61,7 +63,7 @@ const validatePassword = async (req, res, next) => {
 const checkPasswordCorrect = async (req, res, next) => {
   let { username, password } = req.body;
 
-  const validUser = await Users.findUser({ username: username });
+  const validUser = await Users.findUserHashedPW(username);
 
   if (validUser && bcrypt.compareSync(password, validUser.password)) {
     const token = tokenBuilder(validUser);
