@@ -1,6 +1,8 @@
-Trade Me Maybe Allows people to:
+# Trade Me Maybe 
 
-List My Traders in One Place
+Trade Me Maybe is meant to be a pin database and a platform where pin collectors can list their traders, what they're in search of, and find people to trade with.
+
+## List My Traders in One Place
 
 List my own pins for trade
 Add my pins' information to a database if it doesn't exist yet
