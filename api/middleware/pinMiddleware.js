@@ -1,3 +1,5 @@
+const db = require("../data/db-config");
+
 function convertForDB(req, res, next) {
   let makerOrTag = req.body.maker ? req.body.maker : req.body.tag_name;
 
@@ -13,26 +15,38 @@ function convertForDB(req, res, next) {
     }
     i++;
   }
-  if(req.body.maker){
-      req.body.maker = saveToDB
+  if (req.body.maker) {
+    req.body.maker = saveToDB;
   } else {
-      req.body.tag_name = saveToDB
+    req.body.tag_name = saveToDB;
   }
-  
   next();
 }
 
-function checkIfPinExists(){}
+async function checkIfPinExists(req, res, next) {
+  const pin_id = req.params.pin_id;
 
-function noPinDupes(){}
+  let pinExists = await db("pins").where("pin_id", pin_id).first();
 
-function checkIfTagExists(){}
+  if (pinExists) {
+    next();
+  } else {
+    next({ status: 404, message: "That pin doesn't exist!" });
+  }
+}
 
-function noTagDupes(){}
+async function noPinDupes(req, res, next) {
+    
+}
 
+function checkIfTagExists(req, res, next) {}
 
-
+function noTagDupes(req, res, next) {}
 
 module.exports = {
   convertForDB,
+  checkIfPinExists,
+  checkIfTagExists,
+  noPinDupes,
+  noTagDupes,
 };

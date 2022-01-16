@@ -2,12 +2,19 @@ const express = require("express");
 const router = express.Router();
 
 const { restricted } = require("../middleware/authMiddleware");
-const { convertForDB } = require("../middleware/pinMiddleware");
+const {
+  convertForDB,
+  checkIfPinExists,
+  noPinDupes,
+  checkIfTagExists,
+  noTagDupes,
+} = require("../middleware/pinMiddleware");
 
 const Pins = require("../pins/pins_model");
 
 //[GET] /pins/:pin_id
-router.get("/:pin_id", (req, res, next) => {
+//checkIfPinExists
+router.get("/:pin_id", checkIfPinExists, (req, res, next) => {
   Pins.findById(req.params.pin_id)
     .then((pin) => {
       res.status(200).json(pin);
@@ -26,8 +33,7 @@ router.get("/maker/:maker", (req, res, next) => {
 });
 
 //[GET] /pins/:pin_id/iso
-// checkPinExists
-router.get("/:pin_id/iso", (req, res, next) => {
+router.get("/:pin_id/iso", checkIfPinExists, (req, res, next) => {
   Pins.findUsersIsoPin(req.params.pin_id)
     .then((users) => {
       res.status(200).json(users);
@@ -36,8 +42,7 @@ router.get("/:pin_id/iso", (req, res, next) => {
 });
 
 //[GET] /pins/:pin_id/have
-//checkPinExists
-router.get("/:pin_id/have", (req, res, next) => {
+router.get("/:pin_id/have", checkIfPinExists, (req, res, next) => {
   Pins.findUsersWhoHavePin(req.params.pin_id)
     .then((users) => {
       res.status(200).json(users);
@@ -47,17 +52,21 @@ router.get("/:pin_id/have", (req, res, next) => {
 
 //[POST] /pins/:pin_id/have
 //TODO need a way to attach pins a user has to their profile (post)
+//checkIfPinExists
 
 //[POST] /pins/:pin_id/iso
+//checkIfPinExists
 
 //[DELETE] /pins/:pin_id/have
 //TODO need a way to delete a pin from have
+//checkIfPinExists
 
 // [DELETE] /pins/:pin_id/iso
-//TODO need a way to delete a pin from ISO
+//TODO need a way to delete a pin from
+//checkIfPinExists
 
 //[POST] /pins/
-//noDupes
+//noPinDupes
 router.post("/", convertForDB, (req, res, next) => {
   Pins.createPin(req.body)
     .then((new_pin) => {
@@ -67,9 +76,8 @@ router.post("/", convertForDB, (req, res, next) => {
 });
 
 //[PUT] /pins/:pin_id
-//TODO needs some kind of validation for imgurl and maker
-// checkIfPinExists
-router.put("/:pin_id", convertForDB, (req, res, next) => {
+//TODO needs some kind of validation middleware for imgurl and maker
+router.put("/:pin_id", checkIfPinExists, convertForDB, (req, res, next) => {
   Pins.updatePin(req.params.pin_id, req.body)
     .then((updated_pin) => {
       res.status(200).json(updated_pin);
@@ -79,8 +87,7 @@ router.put("/:pin_id", convertForDB, (req, res, next) => {
 
 //[DELETE] /pins/:pin_id
 // should have admin access to delete pin from database
-//middleware - checkIfPinExists
-router.delete("/:pin_id", (req, res, next) => {
+router.delete("/:pin_id", checkIfPinExists, (req, res, next) => {
   Pins.removePin(req.params.pin_id)
     .then(() => {
       res.status(200).json({ message: "Pin deleted!" });
@@ -91,7 +98,7 @@ router.delete("/:pin_id", (req, res, next) => {
 //TAGS stuff
 //[GET] /pins/tags/:tag_name
 // checkIfTagExists
-router.get("/tags/:tag_name", convertForDB,  (req, res, next) => {
+router.get("/tags/:tag_name", convertForDB, (req, res, next) => {
   Pins.findByTag(req.params.tag_name)
     .then((pins) => {
       res.status(200).json(pins);
@@ -99,13 +106,11 @@ router.get("/tags/:tag_name", convertForDB,  (req, res, next) => {
     .catch(next);
 });
 
-
-
 //[POST] /pins/:pin_id/tags
-//middleware: checkIfPinExists, noTagDupes
-router.post("/:pin_id/tags", convertForDB, (req, res, next) => {
+//noTagDupes
+router.post("/:pin_id/tags", convertForDB, checkIfPinExists, (req, res, next) => {
   req.body.pin_id = req.params.pin_id;
-  console.log(req.body)
+  console.log(req.body);
 
   Pins.createTag(req.body)
     .then((new_tag) => {
@@ -115,8 +120,8 @@ router.post("/:pin_id/tags", convertForDB, (req, res, next) => {
 });
 
 //[DELETE] /pins/tags/:pin_id
-//middleware:checkIfPinExists, checkIfTagExists
-router.delete("/:pin_id/tags/:tag_id", convertForDB, (req, res, next) => {
+// checkIfTagExists
+router.delete("/:pin_id/tags/:tag_id", convertForDB, checkIfPinExists, (req, res, next) => {
   Pins.removeTag(req.params.tag_id)
     .then(() => {
       res.status(200).json({ message: "Tag deleted!" });
