@@ -196,13 +196,74 @@ describe("testing all the pin model functions", () => {
 
       expect(removed).toBeUndefined();
     });
-    it("removes pin from the db", async() => {
-      const all_pins = await db('pins')
+    it("removes pin from the db", async () => {
+      const all_pins = await db("pins");
 
-      expect(all_pins).toHaveLength(4)
+      expect(all_pins).toHaveLength(4);
     });
     it("returns data in the correct shape", () => {
-      expect(res).toMatchSnapshot()
+      expect(res).toMatchSnapshot();
+    });
+  });
+
+  describe("createTag(new_tag)", () => {
+    let res;
+
+    const new_tag = {
+      tag_name: "serenity",
+      pin_id: 2,
+    };
+
+    beforeEach(async () => {
+      res = await Pins.createTag(new_tag);
+    });
+
+    it("returns newly-created tag", () => {
+      expect(res.tags_id).toBe(11);
+      expect(res.tag_name).toBe(new_tag.tag_name);
+      expect(res.pin_id).toBe(new_tag.pin_id);
+    });
+    it("adds a tag to the db", async () => {
+      const allPins = await db("pin_tags");
+
+      expect(allPins).toHaveLength(11);
+    });
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot();
+    });
+  });
+
+  describe("removeTag(tags_id)", () => {
+    let res;
+
+    const removed_tag = {
+      tags_id: 10,
+      tag_name: "art-nouveau",
+      pin_id: 4,
+    };
+
+    beforeEach(async () => {
+      res = await Pins.removeTag(10);
+    });
+    it("returns the removed pin", () => {
+      expect(res.tags_id).toBe(removed_tag.tags_id);
+      expect(res.tag_name).toBe(removed_tag.tag_name);
+      expect(res.pin_id).toBe(removed_tag.pin_id);
+    });
+    it("removes the correct pin", async () => {
+      const checkPin = await db("pin_tags")
+        .where("tags_id", removed_tag.tags_id)
+        .first();
+
+      expect(checkPin).toBeUndefined();
+    });
+    it("removes pin from the db", async () => {
+      const allPins = await db("pin_tags");
+
+      expect(allPins).toHaveLength(9);
+    });
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot();
     });
   });
 });

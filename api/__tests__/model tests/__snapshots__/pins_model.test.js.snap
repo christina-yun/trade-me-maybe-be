@@ -8,6 +8,14 @@ Object {
 }
 `;
 
+exports[`testing all the pin model functions createTag(new_tag) returns data in the correct shape 1`] = `
+Object {
+  "pin_id": 2,
+  "tag_name": "serenity",
+  "tags_id": 11,
+}
+`;
+
 exports[`testing all the pin model functions findByMaker(maker) returns data in the correct shape 1`] = `
 Array [
   Object {
@@ -85,6 +93,14 @@ Object {
   "imgurl": "https://www.instagram.com/p/CV4SIHYMior9IXyDEmBh-UBfnfFnx6k4Qda2eY0/",
   "maker": "nyxxi-pins",
   "pin_id": 4,
+}
+`;
+
+exports[`testing all the pin model functions removeTag(tags_id) returns data in the correct shape 1`] = `
+Object {
+  "pin_id": 4,
+  "tag_name": "art-nouveau",
+  "tags_id": 10,
 }
 `;
 

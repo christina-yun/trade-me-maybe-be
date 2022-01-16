@@ -1,5 +1,6 @@
 const db = require("../data/db-config");
 
+//Pin-specific functions
 function findById(pin_id) {
   return db("pins").where("pin_id", pin_id).first();
 }
@@ -24,7 +25,7 @@ function findUsersWhoHavePin(pin_id) {
     .where("p.pin_id", pin_id);
 }
 
-async function create(new_pin) {
+async function createPin(new_pin) {
   const new_pin_id = await db("pins")
     .insert(new_pin, "pin_id")
     .returning("pin_id");
@@ -35,7 +36,7 @@ async function create(new_pin) {
     .first();
 }
 
-async function update(pin_id, updated_pin) {
+async function updatePin(pin_id, updated_pin) {
   await db("pins").update(updated_pin).where("pin_id", pin_id);
 
   return db("pins")
@@ -44,7 +45,7 @@ async function update(pin_id, updated_pin) {
     .first();
 }
 
-async function remove(pin_id) {
+async function removePin(pin_id) {
   const removed_pin = await db("pins")
     .select("pin_id", "maker", "imgurl")
     .where("pin_id", pin_id)
@@ -55,7 +56,9 @@ async function remove(pin_id) {
   return removed_pin;
 }
 
-// Tags stuff
+// ISO and Have functions
+
+// Tag functions
 
 function findByTag(tag_name) {
   return db("pins as p")
@@ -64,9 +67,27 @@ function findByTag(tag_name) {
     .where("tags.tag_name", tag_name);
 }
 
-//TODO createTag()
+async function createTag(new_tag) {
+  const new_tag_id = await db("pin_tags")
+    .insert(new_tag, "tags_id")
+    .returning("tags_id");
 
-//TODO deleteTag()
+  return db("pin_tags")
+    .select("tags_id", "tag_name", "pin_id")
+    .where("tags_id", parseInt(new_tag_id))
+    .first();
+}
+
+async function removeTag(tags_id) {
+  const removed_tag = await db("pin_tags")
+  .select("tags_id", "tag_name", "pin_id")
+  .where("tags_id", tags_id)
+  .first();
+
+  await db('pin_tags').where('tags_id', tags_id).del()
+
+  return removed_tag
+}
 
 module.exports = {
   findById,
@@ -74,7 +95,9 @@ module.exports = {
   findUsersIsoPin,
   findUsersWhoHavePin,
   findByTag,
-  create,
-  update,
-  remove,
+  createPin,
+  updatePin,
+  removePin,
+  createTag,
+  removeTag,
 };
