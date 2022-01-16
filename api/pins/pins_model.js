@@ -31,7 +31,7 @@ async function createPin(new_pin) {
     .returning("pin_id");
 
   return db("pins")
-    .select("pin_id", "maker", "imgurl")
+    .select("pin_id", "pin_name", "maker", "imgurl")
     .where("pin_id", parseInt(new_pin_id))
     .first();
 }
@@ -40,14 +40,14 @@ async function updatePin(pin_id, updated_pin) {
   await db("pins").update(updated_pin).where("pin_id", pin_id);
 
   return db("pins")
-    .select("pin_id", "maker", "imgurl")
+    .select("pin_id", "pin_name", "maker", "imgurl")
     .where("pin_id", pin_id)
     .first();
 }
 
 async function removePin(pin_id) {
   const removed_pin = await db("pins")
-    .select("pin_id", "maker", "imgurl")
+    .select("pin_id", "pin_name", "maker", "imgurl")
     .where("pin_id", pin_id)
     .first();
 
@@ -64,7 +64,7 @@ async function addISO(new_iso) {
 
   return db("pins_iso as iso")
     .leftJoin("pins as p", "iso.pin_id", "p.pin_id")
-    .select("iso.iso_id", "iso.user_id", "p.pin_id", "p.maker", "p.imgurl")
+    .select("iso.iso_id", "iso.user_id", "p.pin_id", "p.pin_name", "p.maker", "p.imgurl")
     .where("iso_id", parseInt(new_ISO_id))
     .first();
 }
@@ -76,7 +76,7 @@ async function addHave(new_have) {
 
   return db("pins_have as have")
     .leftJoin("pins as p", "have.pin_id", "p.pin_id")
-    .select("have.have_id", "have.user_id", "p.pin_id", "p.maker", "p.imgurl")
+    .select("have.have_id", "have.user_id", "p.pin_id", "p.pin_name", "p.maker", "p.imgurl")
     .where("have_id", parseInt(new_have_id))
     .first();
 }
@@ -84,7 +84,7 @@ async function addHave(new_have) {
 async function removeISO(iso_id) {
   const removed_iso = await db("pins_iso as iso")
     .leftJoin("pins as p", "iso.pin_id", "p.pin_id")
-    .select("iso.iso_id", "iso.user_id", "p.pin_id", "p.maker", "p.imgurl")
+    .select("iso.iso_id", "iso.user_id", "p.pin_id", "p.pin_name", "p.maker", "p.imgurl")
     .where("iso_id", iso_id)
     .first();
 
@@ -96,7 +96,7 @@ async function removeISO(iso_id) {
 async function removeHave(have_id) {
   const removed_have = await db("pins_have as have")
     .leftJoin("pins as p", "have.pin_id", "p.pin_id")
-    .select("have.have_id", "have.user_id", "p.pin_id", "p.maker", "p.imgurl")
+    .select("have.have_id", "have.user_id", "p.pin_id", "p.pin_name", "p.maker", "p.imgurl")
     .where("have_id", have_id)
     .first();
 
@@ -109,7 +109,7 @@ async function removeHave(have_id) {
 function findByTag(tag_name) {
   return db("pins as p")
     .leftJoin("pin_tags as tags", "p.pin_id", "tags.pin_id")
-    .select("p.pin_id", "p.maker", "p.imgurl", "tags.tag_name")
+    .select("p.pin_id","p.pin_name", "p.maker", "p.imgurl", "tags.tag_name")
     .where("tags.tag_name", tag_name);
 }
 
