@@ -124,6 +124,7 @@ async function createTag(new_tag) {
     .first();
 }
 
+//could potentially change tags_id to tag_name and have endpoint use tag_name instead of :tags_id
 async function removeTag(tags_id) {
   const removed_tag = await db("pin_tags")
     .select("tags_id", "tag_name", "pin_id")

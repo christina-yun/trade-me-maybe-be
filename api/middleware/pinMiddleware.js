@@ -1,5 +1,7 @@
 function convertForDB(req, res, next) {
-  const lowerCaseMaker = req.body.maker.toLowerCase();
+  let makerOrTag = req.body.maker ? req.body.maker : req.body.tag_name;
+
+  const lowerCaseMaker = makerOrTag.toLowerCase();
   let saveToDB = "";
   let i = 0;
 
@@ -11,9 +13,25 @@ function convertForDB(req, res, next) {
     }
     i++;
   }
-  req.body.maker = saveToDB;
+  if(req.body.maker){
+      req.body.maker = saveToDB
+  } else {
+      req.body.tag_name = saveToDB
+  }
+  
   next();
 }
+
+function checkIfPinExists(){}
+
+function noPinDupes(){}
+
+function checkIfTagExists(){}
+
+function noTagDupes(){}
+
+
+
 
 module.exports = {
   convertForDB,
