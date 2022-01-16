@@ -267,7 +267,7 @@ describe("testing all the pin model functions", () => {
     });
   });
 
-  describe('addISO(new_iso)', () => {
+  describe("addISO(new_iso)", () => {
     let res;
 
     const new_iso = {
@@ -282,8 +282,8 @@ describe("testing all the pin model functions", () => {
     it("returns newly-created iso", () => {
       expect(res.iso_id).toBe(5);
       expect(res.user_id).toBe(new_iso.user_id);
-      expect(res.pin_id).toBe(new_iso.pin_id)
-      expect(res.maker).toBe('astral-pins');
+      expect(res.pin_id).toBe(new_iso.pin_id);
+      expect(res.maker).toBe("astral-pins");
     });
     it("adds an iso to the db", async () => {
       const allISOs = await db("pins_iso");
@@ -293,9 +293,9 @@ describe("testing all the pin model functions", () => {
     it("returns data in the correct shape", () => {
       expect(res).toMatchSnapshot();
     });
-  })
+  });
 
-  describe('addHave(new_have)', () => {
+  describe("addHave(new_have)", () => {
     let res;
 
     const new_have = {
@@ -311,7 +311,7 @@ describe("testing all the pin model functions", () => {
       expect(res.have_id).toBe(6);
       expect(res.user_id).toBe(new_have.user_id);
       expect(res.pin_id).toBe(new_have.pin_id);
-      expect(res.maker).toBe('astral-pins')
+      expect(res.maker).toBe("astral-pins");
     });
     it("adds a have to the db", async () => {
       const allHaves = await db("pins_have");
@@ -321,17 +321,17 @@ describe("testing all the pin model functions", () => {
     it("returns data in the correct shape", () => {
       expect(res).toMatchSnapshot();
     });
-  })
+  });
 
-  describe('removeISO(iso_id)', () => {
+  describe("removeISO(iso_id)", () => {
     let res;
 
     const removed_iso = {
       iso_id: 4,
       user_id: 2,
       pin_id: 3,
-      maker: 'moon-rabbit-pins',
-      imgurl: 'https://www.instagram.com/p/CSiW5xiFs0H/'
+      maker: "moon-rabbit-pins",
+      imgurl: "https://www.instagram.com/p/CSiW5xiFs0H/",
     };
 
     beforeEach(async () => {
@@ -357,17 +357,18 @@ describe("testing all the pin model functions", () => {
     it("returns data in the correct shape", () => {
       expect(res).toMatchSnapshot();
     });
-  })
+  });
 
-  describe('removeHave(have_id)', () => {
+  describe("removeHave(have_id)", () => {
     let res;
 
     const removed_have = {
       have_id: 4,
       user_id: 3,
       pin_id: 1,
-      maker: 'pastel-shooting-star',
-      imgurl: 'https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/'
+      maker: "pastel-shooting-star",
+      imgurl:
+        "https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/",
     };
 
     beforeEach(async () => {
@@ -393,7 +394,5 @@ describe("testing all the pin model functions", () => {
     it("returns data in the correct shape", () => {
       expect(res).toMatchSnapshot();
     });
-  })
-
-
+  });
 });
