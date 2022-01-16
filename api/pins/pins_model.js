@@ -57,7 +57,53 @@ async function removePin(pin_id) {
 }
 
 // ISO and Have functions
+async function addISO(new_iso) {
+  const new_ISO_id = await db("pins_iso")
+    .insert(new_iso, "iso_id")
+    .returning("iso_id");
 
+  return db("pins_iso as iso")
+    .leftJoin("pins as p", "iso.pin_id", "p.pin_id")
+    .select("iso.iso_id", "iso.user_id", "p.pin_id", "p.maker", "p.imgurl")
+    .where("iso_id", parseInt(new_ISO_id))
+    .first();
+}
+
+async function addHave(new_have) {
+  const new_have_id = await db("pins_have")
+    .insert(new_have, "have_id")
+    .returning("have_id");
+
+  return db("pins_have as have")
+    .leftJoin("pins as p", "have.pin_id", "p.pin_id")
+    .select("have.have_id", "have.user_id", "p.pin_id", "p.maker", "p.imgurl")
+    .where("have_id", parseInt(new_have_id))
+    .first();
+}
+
+async function removeISO(iso_id) {
+  const removed_iso = await db("pins_iso as iso")
+    .leftJoin("pins as p", "iso.pin_id", "p.pin_id")
+    .select("iso.iso_id", "iso.user_id", "p.pin_id", "p.maker", "p.imgurl")
+    .where("iso_id", iso_id)
+    .first();
+
+  await db("pins_iso").where("iso_id", iso_id).del();
+
+  return removed_iso;
+}
+
+async function removeHave(have_id) {
+  const removed_have = await db("pins_have as have")
+    .leftJoin("pins as p", "have.pin_id", "p.pin_id")
+    .select("have.have_id", "have.user_id", "p.pin_id", "p.maker", "p.imgurl")
+    .where("have_id", have_id)
+    .first();
+
+  await db("pins_have").where("have_id", have_id).del();
+
+  return removed_have;
+}
 // Tag functions
 
 function findByTag(tag_name) {
@@ -80,13 +126,13 @@ async function createTag(new_tag) {
 
 async function removeTag(tags_id) {
   const removed_tag = await db("pin_tags")
-  .select("tags_id", "tag_name", "pin_id")
-  .where("tags_id", tags_id)
-  .first();
+    .select("tags_id", "tag_name", "pin_id")
+    .where("tags_id", tags_id)
+    .first();
 
-  await db('pin_tags').where('tags_id', tags_id).del()
+  await db("pin_tags").where("tags_id", tags_id).del();
 
-  return removed_tag
+  return removed_tag;
 }
 
 module.exports = {
@@ -100,4 +146,8 @@ module.exports = {
   removePin,
   createTag,
   removeTag,
+  addISO,
+  addHave,
+  removeISO,
+  removeHave,
 };

@@ -266,4 +266,134 @@ describe("testing all the pin model functions", () => {
       expect(res).toMatchSnapshot();
     });
   });
+
+  describe('addISO(new_iso)', () => {
+    let res;
+
+    const new_iso = {
+      user_id: 1,
+      pin_id: 2,
+    };
+
+    beforeEach(async () => {
+      res = await Pins.addISO(new_iso);
+    });
+
+    it("returns newly-created iso", () => {
+      expect(res.iso_id).toBe(5);
+      expect(res.user_id).toBe(new_iso.user_id);
+      expect(res.pin_id).toBe(new_iso.pin_id)
+      expect(res.maker).toBe('astral-pins');
+    });
+    it("adds an iso to the db", async () => {
+      const allISOs = await db("pins_iso");
+
+      expect(allISOs).toHaveLength(5);
+    });
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot();
+    });
+  })
+
+  describe('addHave(new_have)', () => {
+    let res;
+
+    const new_have = {
+      user_id: 2,
+      pin_id: 2,
+    };
+
+    beforeEach(async () => {
+      res = await Pins.addHave(new_have);
+    });
+
+    it("returns newly-created have", () => {
+      expect(res.have_id).toBe(6);
+      expect(res.user_id).toBe(new_have.user_id);
+      expect(res.pin_id).toBe(new_have.pin_id);
+      expect(res.maker).toBe('astral-pins')
+    });
+    it("adds a have to the db", async () => {
+      const allHaves = await db("pins_have");
+
+      expect(allHaves).toHaveLength(6);
+    });
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot();
+    });
+  })
+
+  describe('removeISO(iso_id)', () => {
+    let res;
+
+    const removed_iso = {
+      iso_id: 4,
+      user_id: 2,
+      pin_id: 3,
+      maker: 'moon-rabbit-pins',
+      imgurl: 'https://www.instagram.com/p/CSiW5xiFs0H/'
+    };
+
+    beforeEach(async () => {
+      res = await Pins.removeISO(4);
+    });
+    it("returns the removed ISO", () => {
+      expect(res.iso_id).toBe(removed_iso.iso_id);
+      expect(res.user_id).toBe(removed_iso.user_id);
+      expect(res.pin_id).toBe(removed_iso.pin_id);
+    });
+    it("removes the correct ISO", async () => {
+      const checkISO = await db("pins_iso")
+        .where("iso_id", removed_iso.iso_id)
+        .first();
+
+      expect(checkISO).toBeUndefined();
+    });
+    it("removes ISO from the db", async () => {
+      const allISOs = await db("pins_iso");
+
+      expect(allISOs).toHaveLength(3);
+    });
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot();
+    });
+  })
+
+  describe('removeHave(have_id)', () => {
+    let res;
+
+    const removed_have = {
+      have_id: 4,
+      user_id: 3,
+      pin_id: 1,
+      maker: 'pastel-shooting-star',
+      imgurl: 'https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/'
+    };
+
+    beforeEach(async () => {
+      res = await Pins.removeHave(4);
+    });
+    it("returns the removed have", () => {
+      expect(res.have_id).toBe(removed_have.have_id);
+      expect(res.user_id).toBe(removed_have.user_id);
+      expect(res.pin_id).toBe(removed_have.pin_id);
+    });
+    it("removes the correct have", async () => {
+      const checkHave = await db("pins_have")
+        .where("have_id", removed_have.have_id)
+        .first();
+
+      expect(checkHave).toBeUndefined();
+    });
+    it("removes have from the db", async () => {
+      const allHaves = await db("pins_have");
+
+      expect(allHaves).toHaveLength(4);
+    });
+    it("returns data in the correct shape", () => {
+      expect(res).toMatchSnapshot();
+    });
+  })
+
+
 });

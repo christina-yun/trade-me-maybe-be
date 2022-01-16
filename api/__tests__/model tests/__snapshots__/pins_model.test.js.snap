@@ -1,5 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`testing all the pin model functions addHave(new_have) returns data in the correct shape 1`] = `
+Object {
+  "have_id": 6,
+  "imgurl": "https://www.instagram.com/p/CW4D3YwL8TjSuF-d0phzfcBvAaY_X_itXtPWI00/",
+  "maker": "astral-pins",
+  "pin_id": 2,
+  "user_id": 2,
+}
+`;
+
+exports[`testing all the pin model functions addISO(new_iso) returns data in the correct shape 1`] = `
+Object {
+  "imgurl": "https://www.instagram.com/p/CW4D3YwL8TjSuF-d0phzfcBvAaY_X_itXtPWI00/",
+  "iso_id": 5,
+  "maker": "astral-pins",
+  "pin_id": 2,
+  "user_id": 1,
+}
+`;
+
 exports[`testing all the pin model functions createPin(new_pin) returns data in the correct shape 1`] = `
 Object {
   "imgurl": "https://www.instagram.com/p/CQjnfaOsYo9v8EFjjpZHNFTEMFkXsBNKaOgcDY0/",
@@ -86,6 +106,26 @@ Array [
     "username": "minako_aino",
   },
 ]
+`;
+
+exports[`testing all the pin model functions removeHave(have_id) returns data in the correct shape 1`] = `
+Object {
+  "have_id": 4,
+  "imgurl": "https://www.instagram.com/p/CRhGSWHr4h18xiDeoyzFbCGzMjhrfOjlbe8LEQ0/",
+  "maker": "pastel-shooting-star",
+  "pin_id": 1,
+  "user_id": 3,
+}
+`;
+
+exports[`testing all the pin model functions removeISO(iso_id) returns data in the correct shape 1`] = `
+Object {
+  "imgurl": "https://www.instagram.com/p/CSiW5xiFs0H/",
+  "iso_id": 4,
+  "maker": "moon-rabbit-pins",
+  "pin_id": 3,
+  "user_id": 2,
+}
 `;
 
 exports[`testing all the pin model functions removePin(pin_id) returns data in the correct shape 1`] = `
