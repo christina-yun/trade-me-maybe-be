@@ -8,12 +8,12 @@ const {
   noPinDupes,
   checkIfTagExists,
   noTagDupes,
+  checkIfMakerExists,
 } = require("../middleware/pinMiddleware");
 
 const Pins = require("../pins/pins_model");
 
 //[GET] /pins/:pin_id
-//checkIfPinExists
 router.get("/:pin_id", checkIfPinExists, (req, res, next) => {
   Pins.findById(req.params.pin_id)
     .then((pin) => {
@@ -24,7 +24,7 @@ router.get("/:pin_id", checkIfPinExists, (req, res, next) => {
 
 //[GET] /pins/maker/:maker
 //TODO frontend needs to convert spaces to '-' before sending the request
-router.get("/maker/:maker", (req, res, next) => {
+router.get("/maker/:maker", checkIfMakerExists, (req, res, next) => {
   Pins.findByMaker(req.params.maker)
     .then((pins) => {
       res.status(200).json(pins);
@@ -62,12 +62,12 @@ router.get("/:pin_id/have", checkIfPinExists, (req, res, next) => {
 //checkIfPinExists
 
 // [DELETE] /pins/:pin_id/iso
-//TODO need a way to delete a pin from
+//TODO need a way to delete a pin from ISO
 //checkIfPinExists
 
 //[POST] /pins/
-//noPinDupes
-router.post("/", convertForDB, (req, res, next) => {
+//noPinDupes, validation that all fields are correct
+router.post("/", convertForDB, noPinDupes, (req, res, next) => {
   Pins.createPin(req.body)
     .then((new_pin) => {
       res.status(201).json(new_pin);

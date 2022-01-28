@@ -35,8 +35,30 @@ async function checkIfPinExists(req, res, next) {
   }
 }
 
+async function checkIfMakerExists(req, res, next) {
+  const maker = req.params.maker;
+
+  let makerExists = await db("pins").where("maker", maker).first();
+
+  if (makerExists) {
+    next();
+  } else {
+    next({ status: 404, message: "That maker doesn't exist!" });
+  }
+}
+
 async function noPinDupes(req, res, next) {
-    
+  const pin = req.body;
+
+  let dupe = await db("pins")
+    .where({ pin_name: pin.pin_name })
+    .first();
+
+  if (!dupe) {
+    next();
+  } else {
+    next({ status: 401, message: "That pin already exists!" });
+  }
 }
 
 function checkIfTagExists(req, res, next) {}
@@ -47,6 +69,7 @@ module.exports = {
   convertForDB,
   checkIfPinExists,
   checkIfTagExists,
+  checkIfMakerExists,
   noPinDupes,
   noTagDupes,
 };
