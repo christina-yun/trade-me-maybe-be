@@ -66,7 +66,7 @@ router.get("/:pin_id/have", checkIfPinExists, (req, res, next) => {
 //checkIfPinExists
 
 //[POST] /pins/
-//noPinDupes, validation that all fields are correct
+//TODO validation that all fields are correct
 router.post("/", convertForDB, noPinDupes, (req, res, next) => {
   Pins.createPin(req.body)
     .then((new_pin) => {
@@ -97,8 +97,7 @@ router.delete("/:pin_id", checkIfPinExists, (req, res, next) => {
 
 //TAGS stuff
 //[GET] /pins/tags/:tag_name
-// checkIfTagExists
-router.get("/tags/:tag_name", convertForDB, (req, res, next) => {
+router.get("/tags/:tag_name", checkIfTagExists, convertForDB, (req, res, next) => {
   Pins.findByTag(req.params.tag_name)
     .then((pins) => {
       res.status(200).json(pins);
@@ -106,11 +105,19 @@ router.get("/tags/:tag_name", convertForDB, (req, res, next) => {
     .catch(next);
 });
 
+// [GET] /pins/:pin_id/tags
+router.get("/:pin_id/tags", checkIfPinExists, (req, res, next) => {
+  Pins.findTagsByPin(req.params.pin_id)
+  .then((tags) => {
+    res.status(200).json(tags)
+  })
+  .catch(next);
+})
+
 //[POST] /pins/:pin_id/tags
 //noTagDupes
-router.post("/:pin_id/tags", convertForDB, checkIfPinExists, (req, res, next) => {
+router.post("/:pin_id/tags", convertForDB, checkIfPinExists, noTagDupes, (req, res, next) => {
   req.body.pin_id = req.params.pin_id;
-  console.log(req.body);
 
   Pins.createTag(req.body)
     .then((new_tag) => {
@@ -119,10 +126,9 @@ router.post("/:pin_id/tags", convertForDB, checkIfPinExists, (req, res, next) =>
     .catch(next);
 });
 
-//[DELETE] /pins/tags/:pin_id
-// checkIfTagExists
-router.delete("/:pin_id/tags/:tag_id", convertForDB, checkIfPinExists, (req, res, next) => {
-  Pins.removeTag(req.params.tag_id)
+//[DELETE] /pins/:pin_id/tags/:tag_name
+router.delete("/:pin_id/tags/:tag_name", convertForDB, checkIfPinExists, checkIfTagExists, (req, res, next) => {
+  Pins.removeTag(req.params.pin_id, req.params.tag_name)
     .then(() => {
       res.status(200).json({ message: "Tag deleted!" });
     })

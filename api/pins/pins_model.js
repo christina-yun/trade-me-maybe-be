@@ -64,7 +64,14 @@ async function addISO(new_iso) {
 
   return db("pins_iso as iso")
     .leftJoin("pins as p", "iso.pin_id", "p.pin_id")
-    .select("iso.iso_id", "iso.user_id", "p.pin_id", "p.pin_name", "p.maker", "p.imgurl")
+    .select(
+      "iso.iso_id",
+      "iso.user_id",
+      "p.pin_id",
+      "p.pin_name",
+      "p.maker",
+      "p.imgurl"
+    )
     .where("iso_id", parseInt(new_ISO_id))
     .first();
 }
@@ -76,7 +83,14 @@ async function addHave(new_have) {
 
   return db("pins_have as have")
     .leftJoin("pins as p", "have.pin_id", "p.pin_id")
-    .select("have.have_id", "have.user_id", "p.pin_id", "p.pin_name", "p.maker", "p.imgurl")
+    .select(
+      "have.have_id",
+      "have.user_id",
+      "p.pin_id",
+      "p.pin_name",
+      "p.maker",
+      "p.imgurl"
+    )
     .where("have_id", parseInt(new_have_id))
     .first();
 }
@@ -84,7 +98,14 @@ async function addHave(new_have) {
 async function removeISO(iso_id) {
   const removed_iso = await db("pins_iso as iso")
     .leftJoin("pins as p", "iso.pin_id", "p.pin_id")
-    .select("iso.iso_id", "iso.user_id", "p.pin_id", "p.pin_name", "p.maker", "p.imgurl")
+    .select(
+      "iso.iso_id",
+      "iso.user_id",
+      "p.pin_id",
+      "p.pin_name",
+      "p.maker",
+      "p.imgurl"
+    )
     .where("iso_id", iso_id)
     .first();
 
@@ -96,7 +117,14 @@ async function removeISO(iso_id) {
 async function removeHave(have_id) {
   const removed_have = await db("pins_have as have")
     .leftJoin("pins as p", "have.pin_id", "p.pin_id")
-    .select("have.have_id", "have.user_id", "p.pin_id", "p.pin_name", "p.maker", "p.imgurl")
+    .select(
+      "have.have_id",
+      "have.user_id",
+      "p.pin_id",
+      "p.pin_name",
+      "p.maker",
+      "p.imgurl"
+    )
     .where("have_id", have_id)
     .first();
 
@@ -109,8 +137,15 @@ async function removeHave(have_id) {
 function findByTag(tag_name) {
   return db("pins as p")
     .leftJoin("pin_tags as tags", "p.pin_id", "tags.pin_id")
-    .select("p.pin_id","p.pin_name", "p.maker", "p.imgurl", "tags.tag_name")
+    .select("p.pin_id", "p.pin_name", "p.maker", "p.imgurl", "tags.tag_name")
     .where("tags.tag_name", tag_name);
+}
+
+function findTagsByPin(pin_id) {
+  return db("pins as p")
+    .leftJoin("pin_tags as tags", "p.pin_id", "tags.pin_id")
+    .select("p.pin_id", "tags.tag_name", "p.pin_name", "p.maker", "p.imgurl")
+    .where("p.pin_id", pin_id);
 }
 
 async function createTag(new_tag) {
@@ -125,13 +160,13 @@ async function createTag(new_tag) {
 }
 
 //could potentially change tags_id to tag_name and have endpoint use tag_name instead of :tags_id
-async function removeTag(tags_id) {
+async function removeTag(pin_id, tag_name) {
   const removed_tag = await db("pin_tags")
     .select("tags_id", "tag_name", "pin_id")
-    .where("tags_id", tags_id)
+    .where({ pin_id: pin_id, tag_name: tag_name })
     .first();
 
-  await db("pin_tags").where("tags_id", tags_id).del();
+  await db("pin_tags").where({ pin_id: pin_id, tag_name: tag_name }).del();
 
   return removed_tag;
 }
@@ -142,6 +177,7 @@ module.exports = {
   findUsersIsoPin,
   findUsersWhoHavePin,
   findByTag,
+  findTagsByPin,
   createPin,
   updatePin,
   removePin,
