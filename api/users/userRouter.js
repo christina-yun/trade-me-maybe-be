@@ -16,9 +16,15 @@ router.get("/:user_id", (req, res, next) => {
 });
 
 // [GET] /users/:user_id/iso
-
-router.get("/:user_id/iso");
 // restricted, checkIfUserExists
+router.get("/:user_id/iso", (req, res, next) => {
+    Users.findUserIso(req.params.user_id)
+    .then((iso => {
+        res.status(200).json(iso)
+    }))
+    .catch(next)
+});
+
 // [GET] /users/:user_id/have
 router.get("/user_id/have", (req, res, next) => {});
 

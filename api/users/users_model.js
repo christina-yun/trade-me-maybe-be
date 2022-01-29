@@ -18,7 +18,7 @@ function findUserIso(user_id) {
   return db("users as u")
     .leftJoin("pins_iso as iso", "u.user_id", "iso.user_id")
     .leftJoin("pins as p", "iso.pin_id", "p.pin_id")
-    .select("p.imgurl", "p.maker", "u.user_id", "u.username")
+    .select("p.pin_name", "p.imgurl", "p.maker", "u.user_id", "u.username")
     .where("u.user_id", user_id);
 }
 
