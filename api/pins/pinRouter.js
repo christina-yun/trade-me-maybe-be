@@ -9,6 +9,7 @@ const {
   checkIfTagExists,
   noTagDupes,
   checkIfMakerExists,
+  checkUser,
 } = require("../middleware/pinMiddleware");
 
 const Pins = require("../pins/pins_model");
@@ -66,7 +67,7 @@ router.post("/:pin_id/have", restricted, checkIfPinExists, (req, res, next) => {
 });
 
 //[POST] /pins/:pin_id/iso
-//checkIfPinExists
+//onlyOnce
 router.post("/:pin_id/iso", restricted, checkIfPinExists, (req, res, next) => {
   const pinIso = {
     user_id: req.decodedToken.subject,
@@ -80,13 +81,26 @@ router.post("/:pin_id/iso", restricted, checkIfPinExists, (req, res, next) => {
     .catch(next);
 });
 
-//[DELETE] /pins/:pin_id/have
-//TODO need a way to delete a pin from have
-//checkIfPinExists
+//[DELETE] /pins/:pin_id/have/:have_id
+router.delete("/:pin_id/have/:have_id", restricted, checkIfPinExists, checkUser, (req, res, next) => {
 
-// [DELETE] /pins/:pin_id/iso
-//TODO need a way to delete a pin from ISO
-//checkIfPinExists
+  Pins.removeHave(req.params.have_id)
+  .then((removed) => {
+    res.status(200).json(removed)
+  })
+  .catch(next)
+})
+
+// [DELETE] /pins/:pin_id/iso/:iso_id
+//TODO checkIsoId?
+router.delete("/:pin_id/iso/:iso_id", restricted, checkIfPinExists, checkUser, (req, res, next) => {
+  
+  Pins.removeISO(req.params.iso_id)
+  .then((removed) => {
+    res.status(200).json(removed)
+  })
+  .catch(next)
+})
 
 //[POST] /pins/
 //TODO validation that all fields are correct

@@ -84,6 +84,27 @@ async function noTagDupes(req, res, next) {
   }
 }
 
+async function checkUser(req, res, next) {
+  const user_id = req.decodedToken.subject
+  const haveOrIso_id = req.params.have_id ? req.params.have_id : req.params.iso_id
+
+  let userMatchesHave = await db('pins_have').where({user_id: user_id, have_id: haveOrIso_id}).first();
+
+  let userMatchesIso = await db('pins_iso').where({user_id: user_id, iso_id: haveOrIso_id}).first();
+
+  if(userMatchesHave || userMatchesIso){
+    next();
+  } else {
+    next({ status:404, message: "User doesn't have this pin" })
+  }
+}
+
+function onlyOnce(req, res, next) {
+  const user_id = req.decodedToken.subject
+  
+}
+
+
 module.exports = {
   convertForDB,
   checkIfPinExists,
@@ -91,4 +112,6 @@ module.exports = {
   checkIfMakerExists,
   noPinDupes,
   noTagDupes,
+  checkUser,
+  onlyOnce,
 };
