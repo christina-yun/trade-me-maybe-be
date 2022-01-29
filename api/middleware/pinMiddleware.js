@@ -72,38 +72,66 @@ async function checkIfTagExists(req, res, next) {
 }
 
 async function noTagDupes(req, res, next) {
-  const tag_name = req.body.tag_name
-  const pin_id = req.params.pin_id
+  const tag_name = req.body.tag_name;
+  const pin_id = req.params.pin_id;
 
-  let tagDupe = await db('pin_tags').where({ pin_id: pin_id, tag_name: tag_name }).first()
+  let tagDupe = await db("pin_tags")
+    .where({ pin_id: pin_id, tag_name: tag_name })
+    .first();
 
-  if (!tagDupe){
+  if (!tagDupe) {
     next();
   } else {
-    next({ status: 401, message: "That tag already exists for this pin!"})
+    next({ status: 401, message: "That tag already exists for this pin!" });
   }
 }
 
 async function checkUser(req, res, next) {
-  const user_id = req.decodedToken.subject
-  const haveOrIso_id = req.params.have_id ? req.params.have_id : req.params.iso_id
+  const user_id = req.decodedToken.subject;
+  const haveOrIso_id = req.params.have_id
+    ? req.params.have_id
+    : req.params.iso_id;
 
-  let userMatchesHave = await db('pins_have').where({user_id: user_id, have_id: haveOrIso_id}).first();
+  let userMatchesHave = await db("pins_have")
+    .where({ user_id: user_id, have_id: haveOrIso_id })
+    .first();
 
-  let userMatchesIso = await db('pins_iso').where({user_id: user_id, iso_id: haveOrIso_id}).first();
+  let userMatchesIso = await db("pins_iso")
+    .where({ user_id: user_id, iso_id: haveOrIso_id })
+    .first();
 
-  if(userMatchesHave || userMatchesIso){
+  if (userMatchesHave || userMatchesIso) {
     next();
   } else {
-    next({ status:404, message: "User doesn't have this pin" })
+    next({ status: 404, message: "User doesn't have this pin" });
   }
 }
 
-function onlyOnce(req, res, next) {
-  const user_id = req.decodedToken.subject
-  
-}
+async function onlyOnce(req, res, next) {
+  const user_id = req.decodedToken.subject;
+  const pin_id = parseInt(req.params.pin_id);
 
+  const userHaves = await db("pins_have").where("user_id", user_id);
+
+  const userIsos = await db("pins_iso").where("user_id", user_id);
+
+  const haveDupes = userHaves.filter((have) => {
+    return have.pin_id === pin_id;
+  });
+
+  const isoDupes = userIsos.filter((iso) => {
+    return iso.pin_id == pin_id;
+  });
+
+  if (haveDupes[0] || isoDupes[0]) {
+    next({
+      status: 401,
+      message: "You already have or are in search of this pin",
+    });
+  } else {
+    next();
+  }
+}
 
 module.exports = {
   convertForDB,

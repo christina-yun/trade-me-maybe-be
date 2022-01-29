@@ -10,6 +10,7 @@ const {
   noTagDupes,
   checkIfMakerExists,
   checkUser,
+  onlyOnce,
 } = require("../middleware/pinMiddleware");
 
 const Pins = require("../pins/pins_model");
@@ -52,8 +53,7 @@ router.get("/:pin_id/have", restricted, checkIfPinExists, (req, res, next) => {
 });
 
 //[POST] /pins/:pin_id/have
-//onlyOnce
-router.post("/:pin_id/have", restricted, checkIfPinExists, (req, res, next) => {
+router.post("/:pin_id/have", restricted, checkIfPinExists, onlyOnce, (req, res, next) => {
   const pinHave = {
     user_id: req.decodedToken.subject,
     pin_id: parseInt(req.params.pin_id),
@@ -67,8 +67,7 @@ router.post("/:pin_id/have", restricted, checkIfPinExists, (req, res, next) => {
 });
 
 //[POST] /pins/:pin_id/iso
-//onlyOnce
-router.post("/:pin_id/iso", restricted, checkIfPinExists, (req, res, next) => {
+router.post("/:pin_id/iso", restricted, checkIfPinExists, onlyOnce, (req, res, next) => {
   const pinIso = {
     user_id: req.decodedToken.subject,
     pin_id: parseInt(req.params.pin_id),
@@ -92,7 +91,6 @@ router.delete("/:pin_id/have/:have_id", restricted, checkIfPinExists, checkUser,
 })
 
 // [DELETE] /pins/:pin_id/iso/:iso_id
-//TODO checkIsoId?
 router.delete("/:pin_id/iso/:iso_id", restricted, checkIfPinExists, checkUser, (req, res, next) => {
   
   Pins.removeISO(req.params.iso_id)
@@ -152,7 +150,6 @@ router.get("/:pin_id/tags", restricted, checkIfPinExists, (req, res, next) => {
 })
 
 //[POST] /pins/:pin_id/tags
-//noTagDupes
 router.post("/:pin_id/tags", restricted, convertForDB, checkIfPinExists, noTagDupes, (req, res, next) => {
   req.body.pin_id = req.params.pin_id;
 
