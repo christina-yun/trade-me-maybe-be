@@ -13,7 +13,7 @@ function findUserHashedPW(username) {
     .where("username", username)
     .first();
 }
-
+//TODO combine and optimize ISO and Have functions
 async function findUserIso(user_id) {
   const isoArray = await db("pins_iso").where("user_id", user_id).first();
 
