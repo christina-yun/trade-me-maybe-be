@@ -26,7 +26,14 @@ router.get("/:user_id/iso", (req, res, next) => {
 });
 
 // [GET] /users/:user_id/have
-router.get("/user_id/have", (req, res, next) => {});
+
+router.get("/:user_id/have", (req, res, next) => {
+    Users.findUserHave(req.params.user_id)
+    .then((have) => {
+        res.status(200).json(have)
+    })
+    .catch(next)
+});
 
 // [PUT] /users/:user_id
 //TODO middleware that checks current user matches :user_id
