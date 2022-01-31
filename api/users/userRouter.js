@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-// middleware goes here
 const { restricted } = require("../middleware/authMiddleware");
-
 const {
   checkIfUserExists,
   checkIfLoggedInUser,
@@ -21,7 +19,6 @@ router.get("/:user_id", checkIfUserExists, restricted, (req, res, next) => {
 });
 
 // [GET] /users/:user_id/iso
-// restricted, checkIfUserExists
 router.get("/:user_id/iso", restricted, checkIfUserExists, (req, res, next) => {
     Users.findUserIso(req.params.user_id)
     .then((iso => {
@@ -40,10 +37,7 @@ router.get("/:user_id/have", restricted, checkIfUserExists, (req, res, next) => 
 });
 
 // [PUT] /users/:user_id
-//TODO middleware that checks current user matches :user_id
-//TODO need to figure out a way to make sure only that particular logged in user can update their own account
-//restricted, checkifUserExists, checkIfLoggedInUser
-router.put("/:user_id", restricted, checkIfUserExists, (req, res, next) => {
+router.put("/:user_id", restricted, checkIfUserExists, checkIfLoggedInUser, (req, res, next) => {
     Users.update(req.params.user_id, req.body)
     .then((updatedUser) => {
         res.status(200).json(updatedUser)
@@ -54,12 +48,11 @@ router.put("/:user_id", restricted, checkIfUserExists, (req, res, next) => {
 //TODO how to handle updating password?
 
 // [DELETE] /users/:user_id
-//TODO need to figure out a way to make sure only that particular logged in user or an admin can delete the account
-//checkIfUserExists, checkIfLoggedInUser
-router.delete("/:user_id", restricted, checkIfUserExists, (req, res, next) => {
+//TODO need to figure out a way to make sure an admin can delete the account
+router.delete("/:user_id", restricted, checkIfUserExists, checkIfLoggedInUser, (req, res, next) => {
     Users.removeUser(req.params.user_id)
     .then((removed) => {
-        console.log(removed)
+        res.status(200).json(removed)
     })
     .catch(next)
 });
