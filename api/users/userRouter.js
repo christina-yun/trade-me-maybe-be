@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
+//middleware
 const { restricted } = require("../middleware/authMiddleware");
 const {
   checkIfUserExists,
   checkIfLoggedInUser,
+  validateUser,
 } = require("../middleware/userMiddleware"); 
 
 const Users = require("../users/users_model");

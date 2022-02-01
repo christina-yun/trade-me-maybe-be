@@ -5,19 +5,20 @@ const Users = require("../users/users_model");
 
 const {
   checkUserExists,
-  validateUsername,
-  validatePassword,
+  checkForUsername,
   checkPasswordCorrect,
-  validateContact,
+  checkForContact,
   hashThePassword,
 } = require("../middleware/authMiddleware");
+
+const { validateUser } = require("../middleware/userMiddleware");
 
 //[POST] /auth/register
 router.post(
   "/register",
-  validateUsername,
-  validatePassword,
-  validateContact,
+  validateUser,
+  checkForUsername,
+  checkForContact,
   hashThePassword,
   (req, res, next) => {
     Users.create(req.body)

@@ -1,5 +1,19 @@
 const db = require("../data/db-config");
 
+const{ validateUserSchema } = require("../validation-schema/yup-field-validation")
+
+async function validateUser(req, res, next) {
+  try{
+    const validated = await validateUserSchema.validate(req.body)
+
+    req.body = validated
+    next();
+  }
+  catch(err){
+    next(err);
+  }
+}
+
 async function checkIfUserExists(req, res, next) {
   const user_id = req.params.user_id;
 
@@ -27,6 +41,7 @@ function checkIfLoggedInUser(req, res, next) {
 }
 
 module.exports = {
+  validateUser,
   checkIfUserExists,
   checkIfLoggedInUser,
 };

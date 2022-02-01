@@ -23,10 +23,9 @@ const restricted = (req, res, next) => {
   });
 };
 
-//validation middleware for registration
-//TODO write yup validation schema for username and contact info
+// middleware for checking db during registration
 
-const validateUsername = async (req, res, next) => {
+const checkForUsername = async (req, res, next) => {
   const { username } = req.body;
   const usernameTaken = username
     ? await Users.findUser({ username: username })
@@ -41,18 +40,7 @@ const validateUsername = async (req, res, next) => {
   }
 };
 
-const validatePassword = async (req, res, next) => {
-  const { password } = req.body;
-  if (!password || password.trim() < 1) {
-    next({ status: 401, message: "Password required" });
-  } else if (password.trim().length < 12) {
-    next({ status: 401, message: "Password must be at least 12 characters" });
-  } else {
-    next();
-  }
-};
-
-const validateContact = async (req, res, next) => {
+const checkForContact = async (req, res, next) => {
   const { contact_info } = req.body;
   const contactExists = contact_info
     ? await Users.findUser({ contact_info: contact_info })
@@ -106,10 +94,9 @@ const checkPasswordCorrect = async (req, res, next) => {
 
 module.exports = {
   restricted,
-  validateUsername,
-  validatePassword,
+  checkForUsername,
   hashThePassword,
-  validateContact,
+  checkForContact,
   checkUserExists,
   checkPasswordCorrect,
 };
