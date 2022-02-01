@@ -30,6 +30,7 @@ router.post(
 );
 
 //[POST] /auth/login
+// TODO need to get user_id somehow. Not working
 router.post(
   "/login",
   checkUserExists,

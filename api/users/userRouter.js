@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 //middleware
-const { restricted } = require("../middleware/authMiddleware");
+const { restricted, hashThePassword } = require("../middleware/authMiddleware");
 const {
   checkIfUserExists,
   checkIfLoggedInUser,
@@ -39,7 +39,8 @@ router.get("/:user_id/have", restricted, checkIfUserExists, (req, res, next) => 
 });
 
 // [PUT] /users/:user_id
-router.put("/:user_id", restricted, checkIfUserExists, checkIfLoggedInUser, (req, res, next) => {
+//TODO currently have it written as if pw can be changed, but need frontend to make it separate
+router.put("/:user_id", restricted, validateUser, hashThePassword, checkIfUserExists, checkIfLoggedInUser, (req, res, next) => {
     Users.update(req.params.user_id, req.body)
     .then((updatedUser) => {
         res.status(200).json(updatedUser)
